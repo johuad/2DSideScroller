@@ -3,8 +3,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include "Player.h"
 
-void main()
+int main()
 {
 	int width = 1280;
 	int height = 720;
@@ -18,7 +19,7 @@ void main()
 
 	std::vector<sf::RectangleShape> levelTiles(200);
 
-	b2Vec2 gravity(0.0f, -9.8f);
+	b2Vec2 gravity(0.0f, 60.f);
 	b2World world(gravity);
 
 	float32 timeStep = 1.0f / 60.0f;
@@ -28,33 +29,26 @@ void main()
 
 	b2BodyDef groundBodyDef;
 
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(3 * 50, 8 * 50);
-	b2Body* body = world.CreateBody(&bodyDef);
+	Player *newPlayer = new Player();
 
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(25.0f, 25.0f);
+	b2Body *newPlayerBody;
+	
+	newPlayerBody = newPlayer->createBody(&world, 3 * 50, 8 * 50);
 
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-	fixtureDef.restitution = 0;
-	body->CreateFixture(&fixtureDef);
+	int jumpTimer = 0;
 
 	int level[10][40] =
 	{
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	};
 
 	std::vector<sf::RectangleShape> tiles(400);
@@ -94,9 +88,6 @@ void main()
 		}
 	}
 
-	int velocityX = 0;
-	int velocityY = 0;
-
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -109,49 +100,39 @@ void main()
 
 		world.Step(timeStep, velocityIterations, positionIterations);
 
-		b2Vec2 position = body->GetPosition();
-		float32 mass = body->GetMass();
-		float32 angle = body->GetAngle();
-
-		b2Vec2 velocity = body->GetLinearVelocity();
+		float desiredVelocity = 0;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			velocityY = -100;
+			jumpTimer++;
+			if (jumpTimer < 10)
+			{
+				newPlayer->moveUp(newPlayerBody);
+			}
 		}
-		
+
+		if (newPlayerBody->GetLinearVelocity().y == 0 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			jumpTimer = 0;
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			velocityX = -100;
+			desiredVelocity = -100;
 		}
-		
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			velocityX = 100;
+			desiredVelocity = 100;
 		}
 
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			velocityY = 0;
-		}
+		float velChange = desiredVelocity - newPlayerBody->GetLinearVelocity().x;
+		float impulse = newPlayerBody->GetMass() * velChange;
 
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			velocityX = 0;
-		}
+		newPlayer->moveX(newPlayerBody, impulse);
 
-		float xImpulse = body->GetMass() * velocityX;
-		float yImpulse = body->GetMass() * velocityY;
-
-		body->ApplyLinearImpulse(b2Vec2(xImpulse, yImpulse), body->GetWorldCenter(), true);
-
-		sf::RectangleShape player(sf::Vector2f(50, 50));
-		player.setOrigin(sf::Vector2f(25, 25));
-		player.setPosition(position.x, position.y);
-		player.setFillColor(sf::Color::Blue);
-
-		view.setCenter(position.x, position.y);
-		view.move(0, 0);
+		view.setCenter(newPlayerBody->GetPosition().x, newPlayerBody->GetPosition().y);
+		view.move(0, -2 * 50);
 
 		window.setView(view);
 		window.clear(sf::Color::White);
@@ -159,7 +140,9 @@ void main()
 		{
 			window.draw(tile);
 		}
-		window.draw(player);
+		window.draw(newPlayer->drawable(newPlayerBody));
 		window.display();
 	}
+
+	return 0;
 }
