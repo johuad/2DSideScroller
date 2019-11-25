@@ -1,6 +1,4 @@
 #include "Player.h"
-#include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
 
 Player::Player()
 {	
@@ -24,7 +22,7 @@ b2Body * Player::createBody(b2World *world, float x, float y)
 
 	b2PolygonShape dynamicBox;
 	//define hitbox dimensions
-	dynamicBox.SetAsBox(10.0f, 25.0f);
+	dynamicBox.SetAsBox(10.0f, 20.0f);
 
 	b2FixtureDef fixtureDef;
 	//apply hitbox to fixture
@@ -61,8 +59,8 @@ sf::RectangleShape Player::drawable(b2Body *body)
 {
 	position = body->GetPosition();
 	//creates & defines rectangle for player position
-	sf::RectangleShape rect(sf::Vector2f(20, 50));
-	rect.setOrigin(10, 25);
+	sf::RectangleShape rect(sf::Vector2f(20, 40));
+	rect.setOrigin(10, 20);
 	rect.setPosition(position.x, position.y);
 	rect.setFillColor(sf::Color::Blue);
 
