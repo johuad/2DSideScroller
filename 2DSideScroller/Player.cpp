@@ -44,6 +44,11 @@ b2Body * Player::createBody(b2World *world, float x, float y)
 	return body;
 }
 
+int Player::getHitPoints()
+{
+	return hitPoints;
+}
+
 void Player::moveUp(b2Body *body)
 {
 	float impulse = mass * -100.f;
@@ -55,14 +60,29 @@ void Player::moveX(b2Body *body, float impulse)
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
 }
 
+void Player::takeDamage()
+{
+	hitPoints--;
+}
+
+void Player::death(b2Body *)
+{
+	body->SetTransform(b2Vec2(50.f, 50.f), body->GetAngle());
+}
+
 sf::RectangleShape Player::drawable(b2Body *body)
 {
+	//position of the player's box2d body
 	position = body->GetPosition();
 	//creates & defines rectangle for player position
 	sf::RectangleShape rect(sf::Vector2f(20, 40));
+	//set origin to center
 	rect.setOrigin(10, 20);
+	//set position to player body
 	rect.setPosition(position.x, position.y);
+	//set color. This will change.
 	rect.setFillColor(sf::Color::Blue);
 
+	//return the player rectangle.
 	return rect;
 }
