@@ -6,8 +6,8 @@ class Player
 {
 private:
 	b2Body *body;
-	float mass;
 
+	float mass;
 	b2Vec2 position;
 	b2Vec2 velocity;
 public:
