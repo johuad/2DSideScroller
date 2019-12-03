@@ -6,7 +6,7 @@ class Player
 {
 private:
 	//player body.
-	b2Body *body;
+	b2Body * body;
 
 	//player hitpoints
 	int hitPoints = 100;
@@ -24,7 +24,7 @@ public:
 	~Player();
 
 	//create player body
-	b2Body *createBody(b2World *world, float, float);
+	b2Body *createBody(b2World * world, float, float);
 
 	//return player HP
 	int getHitPoints();
