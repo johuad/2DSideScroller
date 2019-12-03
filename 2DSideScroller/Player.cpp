@@ -8,7 +8,7 @@ Player::~Player()
 {
 }
 
-b2Body * Player::createBody(b2World *world, float x, float y)
+b2Body * Player::createBody(b2World * world, float x, float y)
 {
 	b2BodyDef bodyDef;
 	//set body type
@@ -49,13 +49,13 @@ int Player::getHitPoints()
 	return hitPoints;
 }
 
-void Player::moveUp(b2Body *body)
+void Player::moveUp(b2Body * body)
 {
 	float impulse = mass * -100.f;
 	body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter(), true);
 }
 
-void Player::moveX(b2Body *body, float impulse)
+void Player::moveX(b2Body * body, float impulse)
 {
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
 }
@@ -70,7 +70,7 @@ void Player::death(b2Body *)
 	body->SetTransform(b2Vec2(50.f, 50.f), body->GetAngle());
 }
 
-sf::RectangleShape Player::drawable(b2Body *body)
+sf::RectangleShape Player::drawable(b2Body * body)
 {
 	//position of the player's box2d body
 	position = body->GetPosition();
