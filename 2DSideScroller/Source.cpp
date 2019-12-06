@@ -5,6 +5,7 @@
 #include <vector>
 #include "Player.h"
 #include "Level.h"
+#include "ContactListener.h"
 
 int main()
 {
@@ -22,8 +23,8 @@ int main()
 	//set up viewport
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	//set zoom level
-	//view.zoom(0.4f);
-	view.zoom(5.f); //debug zoom
+	view.zoom(0.5f);
+	//view.zoom(5.f); //debug zoom
 
 					//set timeStep for Box2D physics simulation
 	float32 timeStep = 1.0f / 60.0f;
@@ -33,6 +34,10 @@ int main()
 
 	b2Vec2 gravity(0.0f, 60.f);
 	b2World world(gravity);
+
+	ContactListener worldContactListener;
+
+	world.SetContactListener(&worldContactListener);
 
 	std::vector<sf::RectangleShape> tiles(400);
 
@@ -64,7 +69,7 @@ int main()
 		//keyboard inputs
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			if (!newPlayerBody->GetContactList() == 0)
+			if (worldContactListener.numFootContacts > 0)
 			{
 				newPlayer->moveUp(newPlayerBody);
 			}
