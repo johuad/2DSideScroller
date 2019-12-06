@@ -36,9 +36,17 @@ b2Body * Player::createBody(b2World * world, float x, float y)
 	//apply fixture to body
 	body->CreateFixture(&fixtureDef);
 
-	mass = body->GetMass();
+	//foot sensor fixture
+	dynamicBox.SetAsBox(2.5f, 2.5f, b2Vec2(0.f, 20.f), 0);
+	fixtureDef.isSensor = true;
+	b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
+	footSensorFixture->SetUserData((void*)3);
 
+	//get body mass
+	mass = body->GetMass();
+	//get body position
 	position = body->GetPosition();
+	//get body velocity
 	velocity = body->GetLinearVelocity();
 
 	return body;
