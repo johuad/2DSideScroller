@@ -26,7 +26,7 @@ int main()
 	view.zoom(0.5f);
 	//view.zoom(5.f); //debug zoom
 
-					//set timeStep for Box2D physics simulation
+	//set timeStep for Box2D physics simulation
 	float32 timeStep = 1.0f / 60.0f;
 
 	int32 velocityIterations = 6;
