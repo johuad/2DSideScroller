@@ -23,8 +23,8 @@ int main()
 	//set up viewport
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	//set zoom level
-	view.zoom(0.5f);
-	//view.zoom(5.f); //debug zoom
+	//view.zoom(0.5f);
+	view.zoom(5.f); //debug zoom
 
 	//set timeStep for Box2D physics simulation
 	float32 timeStep = 1.0f / 60.0f;
@@ -43,7 +43,7 @@ int main()
 
 	Level *level = new Level();
 
-	level->generateLevel(&world, &tiles);
+	level->generateLevel(&world, &tiles, "level1.txt", 10, 80);
 
 	//player object
 	Player *newPlayer = new Player();
