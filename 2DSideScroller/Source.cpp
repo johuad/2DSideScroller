@@ -131,9 +131,10 @@ int main()
 		//display everything
 		window.display();
 	}
+
 	//delete newPlayer object.
 	delete newPlayer;
-
+	//delete level object
 	delete level;
 
 	return 0;
