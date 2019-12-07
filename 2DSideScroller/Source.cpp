@@ -32,7 +32,7 @@ int main()
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	b2Vec2 gravity(0.0f, 60.f);
+	b2Vec2 gravity(0.0f, 100.f);
 	b2World world(gravity);
 
 	ContactListener worldContactListener;

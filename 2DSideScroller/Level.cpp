@@ -10,22 +10,25 @@ Level::~Level()
 
 void Level::generateLevel(b2World * world, std::vector<sf::RectangleShape> * tiles, std::string fileName, int row, int col)
 {
+	//ground body def for ground tiles
 	b2BodyDef groundBodyDef;
 
+	//select file to read
 	std::ifstream levelFile{ fileName };
 
+	//dynamically allocate 2d array for level generation
 	level = new int*[row];
 	for (int i = 0; i < row; i++)
 	{
 		level[i] = new int[col];
 	}
 
+	//read level information from file and store it in 2d array
 	for (int i{}; i < row; i++)
 	{
 		for (int j{}; j < col; j++)
 		{
 			levelFile >> level[i][j];
-			std::cout << level[i][j];
 		}
 	}
 

@@ -12,6 +12,7 @@ private:
 	float initX;
 	float initY;
 
+	//pointer to 2d array
 	int **level;
 
 	//storage for level.
@@ -20,8 +21,10 @@ public:
 	Level();
 	~Level();
 
+	//function to generate level
 	void generateLevel(b2World *, std::vector<sf::RectangleShape> *, std::string, int, int);
 
+	//getters for initial position (spawn point)
 	float getInitX();
 	float getInitY();
 };

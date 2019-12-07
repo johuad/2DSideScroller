@@ -76,6 +76,7 @@ void Player::takeDamage()
 void Player::death(b2Body *)
 {
 	body->SetTransform(b2Vec2(50.f, 50.f), body->GetAngle());
+	hitPoints = 100;
 }
 
 sf::RectangleShape Player::drawable(b2Body * body)
