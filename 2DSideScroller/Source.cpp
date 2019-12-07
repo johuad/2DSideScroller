@@ -23,8 +23,8 @@ int main()
 	//set up viewport
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	//set zoom level
-	//view.zoom(0.5f);
-	view.zoom(5.f); //debug zoom
+	view.zoom(0.5f);
+	//view.zoom(5.f); //debug zoom
 
 	//set timeStep for Box2D physics simulation
 	float32 timeStep = 1.0f / 60.0f;
@@ -115,7 +115,7 @@ int main()
 		//set view center
 		view.setCenter(newPlayerBody->GetPosition().x, newPlayerBody->GetPosition().y);
 		//move view along w/ player, with an offset on the Y plane.
-		view.move(0, -2 * 50);
+		view.move(0, -1.25f * 50);
 
 		//set the view
 		window.setView(view);
