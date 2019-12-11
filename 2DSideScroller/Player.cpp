@@ -90,7 +90,7 @@ sf::RectangleShape Player::drawable(b2Body * body)
 	//set position to player body
 	rect.setPosition(position.x, position.y);
 	//set color. This will change.
-	rect.setFillColor(sf::Color::Blue);
+	rect.setFillColor(sf::Color::White);
 
 	//return the player rectangle.
 	return rect;

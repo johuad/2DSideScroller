@@ -4,6 +4,9 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "Tile.h"
+#include "GroundTile.h"
+#include "LavaTile.h"
 
 class Level
 {
@@ -21,8 +24,10 @@ public:
 	Level();
 	~Level();
 
+	b2Body * body;
+
 	//function to generate level
-	void generateLevel(b2World *, std::vector<sf::RectangleShape> *, std::string, int, int);
+	void generateLevel(b2World *, std::vector<Tile*> *, std::string, int, int);
 
 	//getters for initial position (spawn point)
 	float getInitX();
