@@ -9,6 +9,8 @@ public:
 	Tile();
 	~Tile();
 
+	virtual b2Body * returnBody() = 0;
+
 	virtual std::string getID() = 0;
 
 	virtual sf::Sprite returnSprite() = 0;

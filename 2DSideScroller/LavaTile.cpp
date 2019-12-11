@@ -13,6 +13,11 @@ LavaTile::~LavaTile()
 {
 }
 
+b2Body * LavaTile::returnBody()
+{
+	return (int) 0;
+}
+
 std::string LavaTile::getID()
 {
 	return id;
@@ -22,3 +27,4 @@ sf::Sprite LavaTile::returnSprite()
 {
 	return sprite;
 }
+

@@ -13,6 +13,9 @@ public:
 	~LavaTile();
 
 	// Inherited via Tile
+	virtual b2Body * returnBody() override;
+
+	// Inherited via Tile
 	virtual std::string getID() override;
 	virtual sf::Sprite returnSprite() override;
 };

@@ -114,6 +114,11 @@ int main()
 					if (newPlayer->getHitPoints() < 0)
 					{
 						newPlayer->death(newPlayerBody);
+						std::cout << world.GetBodyCount() << std::endl;
+
+						std::cout << "Tiles cleared." << std::endl;
+
+						std::cout << world.GetBodyCount() << std::endl;
 					}
 				}
 			}

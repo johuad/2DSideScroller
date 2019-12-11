@@ -1,7 +1,9 @@
 #include "GroundTile.h"
 
-GroundTile::GroundTile(b2World * world, float r, float c, int x, int y, int sx, int sy)
+GroundTile::GroundTile(b2World * w, float r, float c, int x, int y, int sx, int sy)
 {
+	world = w;
+
 	b2BodyDef bodyDef;
 
 	bodyDef.position.Set(r, c);
@@ -30,6 +32,7 @@ GroundTile::GroundTile(b2World * world, float r, float c, int x, int y, int sx, 
 
 GroundTile::~GroundTile()
 {
+	world->DestroyBody(body);
 }
 
 std::string GroundTile::getID()
