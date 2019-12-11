@@ -24,13 +24,11 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 
 	std::vector<b2Body *> bodies(800);
 
-	//std::vector<sf::RectangleShape> tiles(800);
-
 	std::vector<Tile*> tiles;
 
-	Level *level = new Level();
+	Level level = Level();
 
-	level->generateLevel(&world, &tiles, levelName, 10, 80);
+	level.generateLevel(&world, &tiles, levelName, 10, 80);
 
 	//player object
 	Player newPlayer = Player();
@@ -39,7 +37,7 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 	b2Body *newPlayerBody;
 
 	//create a new body for our player.
-	newPlayerBody = newPlayer.createBody(&world, level->getInitX(), level->getInitY());
+	newPlayerBody = newPlayer.createBody(&world, level.getInitX(), level.getInitY());
 
 	while (window.isOpen())
 	{

@@ -66,7 +66,7 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			//goal
 			else if (level[r][c] == 5)
 			{
-				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 51, 51, 50, 50);
+				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 0, 0, 50, 50);
 
 				tiles->push_back(tile);
 			}
