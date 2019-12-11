@@ -1,6 +1,6 @@
-#include "LavaTile.h"
+#include "GoalTile.h"
 
-LavaTile::LavaTile(float r, float c, int x, int y, int sx, int sy)
+GoalTile::GoalTile(float r, float c, int x, int y, int sx, int sy)
 {
 	texture.loadFromFile("spritesheet.png");
 	sprite.setTexture(texture);
@@ -9,22 +9,21 @@ LavaTile::LavaTile(float r, float c, int x, int y, int sx, int sy)
 	sprite.setOrigin(25, 25);
 }
 
-LavaTile::~LavaTile()
+GoalTile::~GoalTile()
 {
 }
 
-b2Body * LavaTile::returnBody()
+b2Body * GoalTile::returnBody()
 {
 	return nullptr;
 }
 
-std::string LavaTile::getID()
+std::string GoalTile::getID()
 {
 	return id;
 }
 
-sf::Sprite LavaTile::returnSprite()
+sf::Sprite GoalTile::returnSprite()
 {
 	return sprite;
 }
-

@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "GroundTile.h"
 #include "LavaTile.h"
+#include "GoalTile.h"
 
 class Level
 {

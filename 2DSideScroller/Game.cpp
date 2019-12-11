@@ -8,7 +8,6 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	//set zoom level
 	view.zoom(0.5f);
-	//view.zoom(5.f); //debug zoom
 
 	//set timeStep for Box2D physics simulation
 	float32 timeStep = 1.0f / 60.0f;
@@ -34,13 +33,13 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 	level->generateLevel(&world, &tiles, levelName, 10, 80);
 
 	//player object
-	Player *newPlayer = new Player();
+	Player newPlayer = Player();
 
 	//uninitialized body for player
 	b2Body *newPlayerBody;
 
 	//create a new body for our player.
-	newPlayerBody = newPlayer->createBody(&world, level->getInitX(), level->getInitY());
+	newPlayerBody = newPlayer.createBody(&world, level->getInitX(), level->getInitY());
 
 	while (window.isOpen())
 	{
@@ -59,7 +58,7 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		{
 			if (worldContactListener.numFootContacts > 0)
 			{
-				newPlayer->moveUp(newPlayerBody);
+				newPlayer.moveUp(newPlayerBody);
 			}
 		}
 
@@ -81,26 +80,33 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		float impulse = newPlayerBody->GetMass() * velChange;
 
 		//move the player
-		newPlayer->moveX(newPlayerBody, impulse);
+		newPlayer.moveX(newPlayerBody, impulse);
 
 		for (auto& t : tiles)
 		{
 			if (t->getID() == "lava")
 			{
-				if (newPlayer->drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				if (newPlayer.drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 				{
 					//player takes damage if they fall into a hazard
-					newPlayer->takeDamage();
+					newPlayer.takeDamage();
 
-					if (newPlayer->getHitPoints() < 0)
+					if (newPlayer.getHitPoints() < 0)
 					{
-						newPlayer->death(newPlayerBody);
+						newPlayer.death(newPlayerBody);
 						std::cout << world.GetBodyCount() << std::endl;
 
 						std::cout << "Tiles cleared." << std::endl;
 
 						std::cout << world.GetBodyCount() << std::endl;
 					}
+				}
+			}
+			if (t->getID() == "goal")
+			{
+				if (newPlayer.drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				{
+					Game level2 = Game(window, "level2.txt");
 				}
 			}
 		}
@@ -120,7 +126,7 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 			window.draw(t->returnSprite());
 		}
 		//draw player
-		window.draw(newPlayer->drawable(newPlayerBody));
+		window.draw(newPlayer.drawable(newPlayerBody));
 		//display everything
 		window.display();
 	}
