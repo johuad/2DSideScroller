@@ -5,6 +5,9 @@
 #include <vector>
 #include "Player.h"
 #include "Level.h"
+#include "Tile.h"
+#include "GroundTile.h"
+#include "LavaTile.h"
 #include "ContactListener.h"
 
 int main()
@@ -39,7 +42,11 @@ int main()
 
 	world.SetContactListener(&worldContactListener);
 
-	std::vector<sf::RectangleShape> tiles(400);
+	std::vector<b2Body *> bodies(800);
+
+	//std::vector<sf::RectangleShape> tiles(800);
+
+	std::vector<Tile*> tiles;
 
 	Level *level = new Level();
 
@@ -95,11 +102,11 @@ int main()
 		//move the player
 		newPlayer->moveX(newPlayerBody, impulse);
 
-		for (auto& tile : tiles)
+		for (auto& t : tiles)
 		{
-			if (tile.getFillColor() == sf::Color::Red)
+			if (t->getID() == "lava")
 			{
-				if (newPlayer->drawable(newPlayerBody).getGlobalBounds().intersects(tile.getGlobalBounds()))
+				if (newPlayer->drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 				{
 					//player takes damage if they fall into a hazard
 					newPlayer->takeDamage();
@@ -122,20 +129,15 @@ int main()
 		//set the clear color
 		window.clear(sf::Color::White);
 		//draw tiles
-		for (auto& tile : tiles)
+		for (auto& t : tiles)
 		{
-			window.draw(tile);
+			window.draw(t->returnSprite());
 		}
 		//draw player
 		window.draw(newPlayer->drawable(newPlayerBody));
 		//display everything
 		window.display();
 	}
-
-	//delete newPlayer object.
-	delete newPlayer;
-	//delete level object
-	delete level;
 
 	return 0;
 }
