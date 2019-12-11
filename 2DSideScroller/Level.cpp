@@ -65,6 +65,12 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			}
 			else if (level[r][c] == 5)
 			{
+				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 51, 51, 50, 50);
+
+				tiles->push_back(tile);
+			}
+			else if (level[r][c] == 6)
+			{
 				initX = c * 50.f;
 				initY = r * 50.f;
 			}
