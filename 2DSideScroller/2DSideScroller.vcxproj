@@ -184,6 +184,7 @@
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="GoalTile.cpp" />
     <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GoalTile.h" />
     <ClInclude Include="GroundTile.h" />
     <ClInclude Include="LavaTile.h" />
     <ClInclude Include="Level.h" />

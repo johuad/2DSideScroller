@@ -45,30 +45,32 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			//top ground
 			else if (level[r][c] == 2)
 			{
-				//just using a blank tile and pointing it at the transparent part of the sheet
 				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 51, 0, 50, 50);
 
 				tiles->push_back(tile);
 			}
+			//mid ground
 			else if (level[r][c] == 3)
 			{
 				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 0, 0, 50, 50);
 
 				tiles->push_back(tile);
 			}
-			//player spawn point.
+			//lava
 			else if (level[r][c] == 4)
 			{
 				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 0, 51, 50, 50);
 
 				tiles->push_back(tile);
 			}
+			//goal
 			else if (level[r][c] == 5)
 			{
-				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 51, 51, 50, 50);
+				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 51, 51, 50, 50);
 
 				tiles->push_back(tile);
 			}
+			//player spawn
 			else if (level[r][c] == 6)
 			{
 				initX = c * 50.f;

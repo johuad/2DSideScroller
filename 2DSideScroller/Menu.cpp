@@ -43,15 +43,20 @@ Menu::Menu(sf::RenderWindow &window)
 		//keyboard in puts for now
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 		{
-			level1 = new Game(window, "level1.txt");
+			Game level1 = Game(window, "level1.txt");
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 		{
-			level2 = new Game(window, "level2.txt");
+			Game level2 = Game(window, "level2.txt");
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+		{
+			Game level3 = Game(window, "level3.txt");
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
 		{
 			std::exit(0);
 		}

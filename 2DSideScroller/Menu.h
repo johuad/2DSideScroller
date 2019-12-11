@@ -14,10 +14,5 @@ private:
 public:
 	Menu(sf::RenderWindow &);
 	~Menu();
-
-	//game levels
-	Game *level1;
-	Game *level2;
-	Game *level3;
 };
 
