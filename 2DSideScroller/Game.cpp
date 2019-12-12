@@ -46,6 +46,9 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 	//create a new body for the obstacle
 	obstacleBody = obstacle.createBody(&world, level.getInitXO(), level.getInitYO());
 	
+	// Define Bullet
+	std::vector<Bullet> bullets;
+	bool isFiring = false;
 
 	while (window.isOpen())
 	{
@@ -74,11 +77,13 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			desiredVelocity = -100;
+			player.setLastDirection(0);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
 			desiredVelocity = 100;
+			player.setLastDirection(1);
 		}
 
 		//set up impulse for constant x-plane movement
@@ -87,6 +92,11 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 
 		//move the player left or right
 		player.moveX(playerBody, impulse);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		{
+			isFiring = true;
+		}
 
 		//initialize levelCount
 		levelCount = getLevelCount(curLevel);
@@ -129,6 +139,41 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 			}
 		}
 
+		for (auto& b : bullets)
+		{
+			for (auto& t : tiles)
+			{
+				if (b.getBullet().getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				{
+					bullets.pop_back();
+					isFiring = false;
+				}
+			}
+
+			if (b.getBullet().getGlobalBounds().intersects(enemy.getSprite(enemyBody).getGlobalBounds()))
+			{
+				float impulse = 10000;
+				bullets.pop_back();
+				enemy.setHP();
+				std::cout << enemy.getHP() << std::endl;
+
+				if (enemy.getHP() < 0)
+				{
+					if (b.getDirection() > 0)
+					{
+						impulse = impulse * 1;
+					}
+					else if (b.getDirection() < 0)
+					{
+						impulse = impulse * -1;
+					}
+					enemy.moveX(enemyBody, impulse);
+				}
+
+				isFiring = false;
+			}
+		}
+
 		//set view center
 		view.setCenter(playerBody->GetPosition().x, playerBody->GetPosition().y);
 		//move view along w/ player, with an offset on the Y plane.
@@ -153,6 +198,30 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		window.draw(text);
 		//draw player
 		window.draw(player.getSprite(playerBody));
+
+		// firing bullet*/
+		if (isFiring && bullets.size() < 1)
+		{
+			int speed = 3;
+			if (player.getLastDirection() == 1)
+			{
+				speed = speed * 1;
+			}
+			else if (player.getLastDirection() == 0)
+			{
+				speed = speed * -1;
+			}
+			Bullet bullet = Bullet(speed);
+			bullet.setPos(sf::Vector2f(playerBody->GetPosition().x, playerBody->GetPosition().y));
+			bullets.push_back(bullet);
+		}
+		
+		for (auto& b : bullets)
+		{
+			window.draw(b.getBullet());
+			b.fire();
+		}
+
 		//draw enemy
 		window.draw(enemy.getSprite(enemyBody));
 		//draw obstacle

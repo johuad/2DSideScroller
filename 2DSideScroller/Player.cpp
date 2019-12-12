@@ -10,6 +10,16 @@ Player::~Player()
 {
 }
 
+void Player::setLastDirection(int i)
+{
+	lastDirection = i;
+}
+
+int Player::getLastDirection()
+{
+	return lastDirection;
+}
+
 b2Body * Player::createBody(b2World * world, float x, float y)
 {
 	b2BodyDef bodyDef;

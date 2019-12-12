@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "Obstacle.h"
 #include "Tile.h"
+#include "Bullet.h"
 
 class Game
 {
