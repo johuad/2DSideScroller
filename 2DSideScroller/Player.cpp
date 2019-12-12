@@ -2,6 +2,8 @@
 
 Player::Player()
 {	
+	texture.loadFromFile("spritesheet.png");
+	sprite.setTexture(texture);
 }
 
 Player::~Player()
@@ -49,15 +51,37 @@ b2Body * Player::createBody(b2World * world, float x, float y)
 	//get body velocity
 	velocity = body->GetLinearVelocity();
 
+	initX = x;
+	initY = y;
+
 	return body;
 }
 
-int Player::getHitPoints()
+void Player::setHP()
+{
+	hitPoints--;
+}
+
+int Player::getHP()
 {
 	return hitPoints;
 }
 
-void Player::moveUp(b2Body * body)
+void Player::destroy(b2Body *)
+{
+	body->SetTransform(b2Vec2(initX, initY), body->GetAngle());
+	hitPoints = 100;
+}
+
+sf::Sprite Player::getSprite(b2Body * body)
+{
+	sprite.setTextureRect(sf::IntRect(0, 0, 20, 40));
+	sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
+	sprite.setOrigin(10.f, 20.f);
+	return sprite;
+}
+
+void Player::moveY(b2Body * body)
 {
 	float impulse = mass * -100.f;
 	body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter(), true);
@@ -66,32 +90,4 @@ void Player::moveUp(b2Body * body)
 void Player::moveX(b2Body * body, float impulse)
 {
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
-}
-
-void Player::takeDamage()
-{
-	hitPoints--;
-}
-
-void Player::death(b2Body *)
-{
-	body->SetTransform(b2Vec2(50.f, 300.f), body->GetAngle());
-	hitPoints = 100;
-}
-
-sf::RectangleShape Player::drawable(b2Body * body)
-{
-	//position of the player's box2d body
-	position = body->GetPosition();
-	//creates & defines rectangle for player position
-	sf::RectangleShape rect(sf::Vector2f(20, 40));
-	//set origin to center
-	rect.setOrigin(10, 20);
-	//set position to player body
-	rect.setPosition(position.x, position.y);
-	//set color. This will change.
-	rect.setFillColor(sf::Color::White);
-
-	//return the player rectangle.
-	return rect;
 }

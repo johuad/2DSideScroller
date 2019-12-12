@@ -7,14 +7,23 @@
 #include "Tile.h"
 #include "GroundTile.h"
 #include "LavaTile.h"
+#include "GateTile.h"
 #include "GoalTile.h"
 
 class Level
 {
 private:
-	//initial player position
+	//player initial position
 	float initX;
 	float initY;
+
+	//enemy initial position
+	float initXE;
+	float initYE;
+
+	//obstacle initial position
+	float initXO;
+	float initYO;
 
 	//pointer to 2d array
 	int **level;
@@ -30,8 +39,14 @@ public:
 	//function to generate level
 	void generateLevel(b2World *, std::vector<Tile*> *, std::string, int, int);
 
-	//getters for initial position (spawn point)
+	//getters for initial positions (spawn points)
 	float getInitX();
 	float getInitY();
+
+	float getInitXE();
+	float getInitYE();
+
+	float getInitXO();
+	float getInitYO();
 };
 
