@@ -19,6 +19,9 @@ protected:
 	//player mass
 	float mass;
 
+	bool moveLeft = false;
+	bool moveRight = false;
+
 	//player body.
 	b2Body * body;
 

@@ -34,7 +34,7 @@ b2Body * Player::createBody(b2World * world, float x, float y)
 
 	b2PolygonShape dynamicBox;
 	//define hitbox dimensions
-	dynamicBox.SetAsBox(10.0f, 20.0f);
+	dynamicBox.SetAsBox(5.0f, 20.0f);
 
 	b2FixtureDef fixtureDef;
 	//apply hitbox to fixture
@@ -42,14 +42,14 @@ b2Body * Player::createBody(b2World * world, float x, float y)
 	//set density of our fixture
 	fixtureDef.density = 1.0f;
 	//set friction of our fixture
-	fixtureDef.friction = 0.3f;
+	fixtureDef.friction = 0.0f;
 	//set fixture restitution
 	fixtureDef.restitution = 0;
 	//apply fixture to body
 	body->CreateFixture(&fixtureDef);
 
 	//foot sensor fixture
-	dynamicBox.SetAsBox(9.5f, 2.5f, b2Vec2(0.f, 20.f), 0);
+	dynamicBox.SetAsBox(2.45f, 2.5f, b2Vec2(0.f, 20.f), 0);
 	fixtureDef.isSensor = true;
 	b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 	footSensorFixture->SetUserData((void*)3);
@@ -85,9 +85,6 @@ void Player::destroy(b2Body *)
 
 sf::Sprite Player::getSprite(b2Body * body)
 {
-	sprite.setTextureRect(sf::IntRect(0, 0, 20, 40));
-	sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
-	sprite.setOrigin(10.f, 20.f);
 	return sprite;
 }
 
@@ -99,5 +96,27 @@ void Player::moveY(b2Body * body)
 
 void Player::moveX(b2Body * body, float impulse)
 {
+	if (lastDirection == 1)
+	{
+		bool moveRight = true;
+		if (moveRight)
+		{
+			sprite.setTextureRect(sf::IntRect(80, 0, 20, 40));
+			sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
+			sprite.setOrigin(10.f, 20.f);
+			moveRight = false;
+		}
+	}
+	else if (lastDirection == 0)
+	{
+		bool moveLeft = true;
+		if (moveLeft)
+		{
+			sprite.setTextureRect(sf::IntRect(60, 0, 20, 40));
+			sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
+			sprite.setOrigin(10.f, 20.f);
+			moveLeft = false;
+		}
+	}
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
 }

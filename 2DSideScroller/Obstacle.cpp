@@ -69,8 +69,7 @@ b2Body * Obstacle::createBody(b2World * world, float x, float y)
 
 sf::Sprite Obstacle::getSprite(b2Body *)
 {
-	sprite.setTextureRect(sf::IntRect(0, 50, 20, 50));
-	sprite.setColor(sf::Color::Magenta);
+	sprite.setTextureRect(sf::IntRect(0, 110, 20, 50));
 	sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
 	sprite.setOrigin(10.f, 25.f);
 

@@ -48,7 +48,7 @@ b2Body * Enemy::createBody(b2World * world, float x, float y)
 
 	b2PolygonShape dynamicBox;
 	//define hitbox dimensions
-	dynamicBox.SetAsBox(10.0f, 20.0f);
+	dynamicBox.SetAsBox(5.0f, 20.0f);
 
 	b2FixtureDef fixtureDef;
 	//apply hitbox to fixture
@@ -72,7 +72,7 @@ b2Body * Enemy::createBody(b2World * world, float x, float y)
 
 sf::Sprite Enemy::getSprite(b2Body *)
 {
-	sprite.setTextureRect(sf::IntRect(50, 0, 20, 40));
+	sprite.setTextureRect(sf::IntRect(0, 0, 20, 40));
 	sprite.setColor(sf::Color::Yellow);
 	sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
 	sprite.setOrigin(10.f, 20.f);
