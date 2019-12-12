@@ -38,28 +38,28 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			if (level[r][c] == 1)
 			{
 				//just using a blank tile and pointing it at the transparent part of the sheet
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 50, 50, 50);
+				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 100, 50, 50);
 
 				tiles->push_back(tile);
 			}
 			//top ground
 			else if (level[r][c] == 2)
 			{
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 0, 50, 50);
+				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 100, 0, 50, 50);
 
 				tiles->push_back(tile);
 			}
 			//mid ground
 			else if (level[r][c] == 3)
 			{
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 0, 0, 50, 50);
+				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 40, 50, 50);
 
 				tiles->push_back(tile);
 			}
 			//lava
 			else if (level[r][c] == 4)
 			{
-				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 0, 50, 50, 50);
+				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 100, 50, 60, 50);
 
 				tiles->push_back(tile);
 			}
@@ -72,14 +72,14 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			//gate
 			else if (level[r][c] == 6)
 			{
-				GateTile * tile = new GateTile(c * 50.f, r * 50.f, 0, 0, 50, 50);
+				GateTile * tile = new GateTile(c * 50.f, r * 50.f, 0, 40, 50, 50);
 
 				tiles->push_back(tile);
 			}
 			//goal
 			else if (level[r][c] == 7)
 			{
-				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 0, 0, 50, 50);
+				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 100, 50, 50, 50);
 
 				tiles->push_back(tile);
 			}

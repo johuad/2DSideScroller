@@ -119,6 +119,15 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 
 			if (t->getID() == "goal")
 			{
+				if (enemy.getSprite(enemyBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				{
+					world.DestroyBody(enemyBody);
+					world.DestroyBody(obstacleBody);
+				}
+			}
+
+			if (t->getID() == "gate")
+			{
 				if (player.getSprite(playerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 				{
 					levelCount++;
@@ -126,15 +135,6 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 					std::cout << newLevel << std::endl;
 
 					Game newGame = Game(window, newLevel);
-				}
-			}
-
-			if (t->getID() == "gate")
-			{
-				if (enemy.getSprite(enemyBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
-				{
-					world.DestroyBody(enemyBody);
-					world.DestroyBody(obstacleBody);
 				}
 			}
 		}
@@ -154,21 +154,16 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 			{
 				float impulse = 10000;
 				bullets.pop_back();
-				enemy.setHP();
-				std::cout << enemy.getHP() << std::endl;
 
-				if (enemy.getHP() < 0)
+				if (b.getDirection() > 0)
 				{
-					if (b.getDirection() > 0)
-					{
-						impulse = impulse * 1;
-					}
-					else if (b.getDirection() < 0)
-					{
-						impulse = impulse * -1;
-					}
-					enemy.moveX(enemyBody, impulse);
+					impulse = impulse * 1;
 				}
+				else if (b.getDirection() < 0)
+				{
+					impulse = impulse * -1;
+				}
+				enemy.moveX(enemyBody, impulse);
 
 				isFiring = false;
 			}
