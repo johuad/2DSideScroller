@@ -5,7 +5,7 @@ class Enemy : public Entity
 {
 protected:
 	//enemy hitpoints
-	int hitPoints = 100;
+	int hitPoints;
 
 	//enemy initial position
 	float initX;

@@ -8,10 +8,14 @@ class Player : public Entity
 protected:
 	//player hitpoints
 	int hitPoints = 100;
+	
+	//last facing
+	int lastDirection = 1;
 
 	//player initial position
 	float initX;
 	float initY;
+
 	//player mass
 	float mass;
 
@@ -31,6 +35,9 @@ protected:
 public:
 	Player();
 	~Player();
+
+	void setLastDirection(int);
+	int getLastDirection();
 
 	// Inherited via Entity
 	virtual void setHP() override;

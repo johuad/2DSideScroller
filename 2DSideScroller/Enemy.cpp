@@ -4,6 +4,7 @@ Enemy::Enemy()
 {
 	texture.loadFromFile("spritesheet.png");
 	sprite.setTexture(texture);
+	hitPoints = 100;
 }
 
 Enemy::~Enemy()
@@ -17,15 +18,16 @@ void Enemy::setHP()
 
 int Enemy::getHP()
 {
-	return hitpoints;
+	return hitPoints;
 }
 
 void Enemy::moveY(b2Body *)
 {
 }
 
-void Enemy::moveX(b2Body *, float)
+void Enemy::moveX(b2Body *body, float impulse)
 {
+	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
 }
 
 void Enemy::destroy(b2Body *)
