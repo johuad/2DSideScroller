@@ -18,26 +18,34 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 	b2Vec2 gravity(0.0f, 100.f);
 	b2World world(gravity);
 
-	ContactListener worldContactListener;
-
 	world.SetContactListener(&worldContactListener);
 
-	std::vector<b2Body *> bodies(800);
+	//load font file
+	font.loadFromFile("arial.ttf");
+	//set text font
+	text.setFont(font);
+	//set character size
+	text.setCharacterSize(10);
+	//set fill color
+	text.setFillColor(sf::Color::Green);
+	//set style
+	text.setStyle(sf::Text::Bold);
 
-	std::vector<Tile*> tiles;
+	//set current level (file name)
+	curLevel = levelName;
 
-	Level level = Level();
-
+	//generate level
 	level.generateLevel(&world, &tiles, levelName, 10, 80);
 
-	//player object
-	Player newPlayer = Player();
-
-	//uninitialized body for player
-	b2Body *newPlayerBody;
-
 	//create a new body for our player.
-	newPlayerBody = newPlayer.createBody(&world, level.getInitX(), level.getInitY());
+	playerBody = player.createBody(&world, level.getInitX(), level.getInitY());
+
+	//create a new body for the enemy
+	enemyBody = enemy.createBody(&world, level.getInitXE(), level.getInitYE());
+
+	//create a new body for the obstacle
+	obstacleBody = obstacle.createBody(&world, level.getInitXO(), level.getInitYO());
+	
 
 	while (window.isOpen())
 	{
@@ -56,7 +64,7 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		{
 			if (worldContactListener.numFootContacts > 0)
 			{
-				newPlayer.moveUp(newPlayerBody);
+				player.moveY(playerBody);
 			}
 		}
 
@@ -74,43 +82,55 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		}
 
 		//set up impulse for constant x-plane movement
-		float velChange = desiredVelocity - newPlayerBody->GetLinearVelocity().x;
-		float impulse = newPlayerBody->GetMass() * velChange;
+		float velChange = desiredVelocity - playerBody->GetLinearVelocity().x;
+		float impulse = playerBody->GetMass() * velChange;
 
-		//move the player
-		newPlayer.moveX(newPlayerBody, impulse);
+		//move the player left or right
+		player.moveX(playerBody, impulse);
+
+		//initialize levelCount
+		levelCount = getLevelCount(curLevel);
 
 		for (auto& t : tiles)
 		{
 			if (t->getID() == "lava")
 			{
-				if (newPlayer.drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				if (player.getSprite(playerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 				{
 					//player takes damage if they fall into a hazard
-					newPlayer.takeDamage();
+					player.setHP();
 
-					if (newPlayer.getHitPoints() < 0)
+					if (player.getHP() < 0)
 					{
-						newPlayer.death(newPlayerBody);
-						std::cout << world.GetBodyCount() << std::endl;
-
-						std::cout << "Tiles cleared." << std::endl;
-
-						std::cout << world.GetBodyCount() << std::endl;
+						player.destroy(playerBody);
 					}
 				}
 			}
+
 			if (t->getID() == "goal")
 			{
-				if (newPlayer.drawable(newPlayerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				if (player.getSprite(playerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 				{
-					Game level2 = Game(window, "level2.txt");
+					levelCount++;
+					std::string newLevel = "level" + std::to_string(levelCount) + ".txt";
+					std::cout << newLevel << std::endl;
+
+					Game newGame = Game(window, newLevel);
+				}
+			}
+
+			if (t->getID() == "gate")
+			{
+				if (enemy.getSprite(enemyBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+				{
+					world.DestroyBody(enemyBody);
+					world.DestroyBody(obstacleBody);
 				}
 			}
 		}
 
 		//set view center
-		view.setCenter(newPlayerBody->GetPosition().x, newPlayerBody->GetPosition().y);
+		view.setCenter(playerBody->GetPosition().x, playerBody->GetPosition().y);
 		//move view along w/ player, with an offset on the Y plane.
 		view.move(0, -1.25f * 50);
 
@@ -123,8 +143,20 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 		{
 			window.draw(t->returnSprite());
 		}
+		std::string playerHealth = "HP: " + std::to_string(player.getHP());
+		text.setString(playerHealth);
+		text.setPosition(playerBody->GetPosition().x - 20, playerBody->GetPosition().y - 40);
+		if (player.getHP() < 25)
+			text.setFillColor(sf::Color::Red);
+		else
+			text.setFillColor(sf::Color::Green);
+		window.draw(text);
 		//draw player
-		window.draw(newPlayer.drawable(newPlayerBody));
+		window.draw(player.getSprite(playerBody));
+		//draw enemy
+		window.draw(enemy.getSprite(enemyBody));
+		//draw obstacle
+		window.draw(obstacle.getSprite(obstacleBody));
 		//display everything
 		window.display();
 	}
@@ -132,4 +164,25 @@ Game::Game(sf::RenderWindow &window, std::string levelName)
 
 Game::~Game()
 {
+}
+
+int Game::getLevelCount(std::string i)
+{	
+	auto n = i.find_first_of("0123456789");
+
+	int lc;
+
+	try
+	{
+		if (std::string::npos != n)
+		{
+			lc = std::stoul(i.substr(n));
+		}
+	}
+	catch (int e)
+	{
+		std::cout << "Exception: " << e << std::endl;
+	}
+
+	return lc;
 }

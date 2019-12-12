@@ -1,30 +1,30 @@
-#include "GoalTile.h"
+#include "GateTile.h"
 
-GoalTile::GoalTile(float r, float c, int x, int y, int sx, int sy)
+GateTile::GateTile(float r, float c, int x, int y, int sx, int sy)
 {
 	texture.loadFromFile("spritesheet.png");
 	sprite.setTexture(texture);
-	sprite.setColor(sf::Color::Cyan);
+	sprite.setColor(sf::Color::Green);
 	sprite.setTextureRect(sf::IntRect(x, y, sx, sy));
 	sprite.setPosition(r, c);
 	sprite.setOrigin(25, 25);
 }
 
-GoalTile::~GoalTile()
+GateTile::~GateTile()
 {
 }
 
-b2Body * GoalTile::returnBody()
+b2Body * GateTile::returnBody()
 {
 	return nullptr;
 }
 
-std::string GoalTile::getID()
+std::string GateTile::getID()
 {
 	return id;
 }
 
-sf::Sprite GoalTile::returnSprite()
+sf::Sprite GateTile::returnSprite()
 {
 	return sprite;
 }
