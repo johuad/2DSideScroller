@@ -1,6 +1,6 @@
 #include "GameStatePlay.h"
 
-GameStatePlay::GameStatePlay(Game *game, std::string levelName)
+GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 {
 	this->game = game;
 	
@@ -30,7 +30,7 @@ GameStatePlay::GameStatePlay(Game *game, std::string levelName)
 	curLevel = levelName;
 
 	//generate level
-	level.generateLevel(world, &tiles, levelName, 10, 80);
+	level = Level(world, &tiles, levelName, 10, 80);
 
 	//create a new body for our player.
 	playerBody = player->createBody(world, level.getInitX(), level.getInitY());
@@ -43,33 +43,43 @@ GameStatePlay::GameStatePlay(Game *game, std::string levelName)
 
 	//Get the current level count.
 	levelCount = GetLevelCount(curLevel);
+
+	levelCount = levelCount + 1;
+
+	nextLevel = "level" + std::to_string(levelCount) + ".txt";
+	lastLevel = "";
+
+	manifest.open("levelmanifest.txt");
+
+	while (std::getline(manifest, line))
+	{
+		levelManifest.push_back(line);
+	}
+
+	if (!std::count(levelManifest.begin(), levelManifest.end(), nextLevel))
+	{
+		lastLevel = curLevel;
+	}
 }
 
 GameStatePlay::~GameStatePlay()
 {
 }
 
-void GameStatePlay::SetupUI(sf::RenderWindow & window)
-{
-
-}
-
 void GameStatePlay::Draw(sf::RenderWindow & window, const float delta)
 {
+	//Set up viewport.
+	sf::View view = window.getDefaultView();
+	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
+	view.zoom(0.5f);
+	view.setCenter(playerBody->GetPosition().x, playerBody->GetPosition().y);
+	view.move(0, -1.25f * 50);
+
+	//Set the viewport.
+	window.setView(view);
+
+	//Clear color (and also lazily set up background for the game).
 	window.clear(sf::Color::Blue);
-
-	//Draw all of our tiles.
-	for (auto& t : tiles)
-	{
-		window.draw(t->returnSprite());
-	}
-
-	//Draw bullets.
-	for (auto& b : player->bullets)
-	{
-		window.draw(b.getBullet());
-		b.fire();
-	}
 
 	//Set up our "health meter"
 	std::string playerHealth = "HP: " + std::to_string(player->getHP());
@@ -86,32 +96,62 @@ void GameStatePlay::Draw(sf::RenderWindow & window, const float delta)
 		text.setFillColor(sf::Color::Green);
 	}
 
+
+	//Draw all of our tiles.
+	for (auto& t : tiles)
+	{
+		window.draw(t->returnSprite());
+	}
+
+	//Draw entities.
+	window.draw(player->getSprite(playerBody));
+	window.draw(enemy->getSprite(enemyBody));
+	window.draw(obstacle->getSprite(obstacleBody));
+
 	//Draw the text of our HP counter
 	window.draw(text);
 
-	//Draw player
-	window.draw(player->getSprite(playerBody));
+	//Draw bullets.
+	for (auto& b : player->bullets)
+	{
+		window.draw(b.getBullet());
+		b.fire();
+	}
 
-	//draw enemy
-	window.draw(enemy->getSprite(enemyBody));
-	//draw obstacle
-	window.draw(obstacle->getSprite(obstacleBody));
-
-	//Set up viewport.
-	sf::View view = window.getDefaultView();
-	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
-	view.zoom(0.5f);
-	view.setCenter(playerBody->GetPosition().x, playerBody->GetPosition().y);
-	view.move(0, -1.25f * 50);
-
-	//Set the viewport.
-	window.setView(view);
 }
 
 void GameStatePlay::Update(const float delta)
 {
 	//Set world step.
 	world->Step(delta, velocityIterations, positionIterations);
+
+	//Fire bullets.
+	for (auto& b : player->bullets)
+	{
+		for (auto& t : tiles)
+		{
+			if (b.getBullet().getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
+			{
+				player->bullets.pop_back();
+			}
+		}
+
+		if (b.getBullet().getGlobalBounds().intersects(enemy->getSprite(enemyBody).getGlobalBounds()))
+		{
+			float impulse = 10000;
+			player->bullets.pop_back();
+
+			if (b.getDirection() > 0)
+			{
+				impulse = impulse * 1;
+			}
+			else if (b.getDirection() < 0)
+			{
+				impulse = impulse * -1;
+			}
+			enemy->moveX(enemyBody, impulse);
+		}
+	}
 
 	//Check for special tiles.
 	for (auto &t : tiles)
@@ -143,36 +183,16 @@ void GameStatePlay::Update(const float delta)
 		{
 			if (player->getSprite(playerBody).getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
 			{
-				std::exit(0);
+				if (lastLevel == curLevel)
+				{
+					game->ChangeState(std::shared_ptr<GameStateMenu>(new GameStateMenu(game)));
+				}
+				else
+				{
+					//Move to the next level.
+					game->ChangeState(std::shared_ptr<GameStatePlay>(new GameStatePlay(game, nextLevel)));
+				}
 			}
-		}
-	}
-
-	//Fire bullets.
-	for (auto& b : player->bullets)
-	{
-		for (auto& t : tiles)
-		{
-			if (b.getBullet().getGlobalBounds().intersects(t->returnSprite().getGlobalBounds()))
-			{
-				player->bullets.pop_back();
-			}
-		}
-
-		if (b.getBullet().getGlobalBounds().intersects(enemy->getSprite(enemyBody).getGlobalBounds()))
-		{
-			float impulse = 10000;
-			player->bullets.pop_back();
-
-			if (b.getDirection() > 0)
-			{
-				impulse = impulse * 1;
-			}
-			else if (b.getDirection() < 0)
-			{
-				impulse = impulse * -1;
-			}
-			enemy->moveX(enemyBody, impulse);
 		}
 	}
 }
@@ -210,12 +230,14 @@ void GameStatePlay::HandleInput(sf::RenderWindow & window, sf::Event event)
 	//Move the player left or right
 	player->moveX(playerBody, impulse);
 
+	
 	//Fire a bullet.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	{
 		isFiring = true;
 		player->FireBullet();
 	}
+	
 }
 
 int GameStatePlay::GetLevelCount(std::string i)

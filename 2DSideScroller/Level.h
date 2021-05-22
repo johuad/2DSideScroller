@@ -33,15 +33,14 @@ private:
 	//Blank tile declaration.
 	Tile * tile;
 public:
+	Level(b2World *, std::vector<Tile*> *, std::string, int, int);
 	Level();
 	~Level();
 
+	//Box2D body for creating static tiles the player can collide with.
 	b2Body * body;
 
-	//function to generate level
-	void generateLevel(b2World *, std::vector<Tile*> *, std::string, int, int);
-
-	//getters for initial positions (spawn points)
+	//Fetters for initial positions (spawn points)
 	float getInitX();
 	float getInitY();
 	float getInitXE();

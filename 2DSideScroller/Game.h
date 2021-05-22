@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/graphics.hpp>
 #include <SFML/System.hpp>
-#include <stack>
 #include <iostream>
+#include <stack>
 #include "GameState.h"
 
 
@@ -14,18 +14,21 @@ protected:
 	int SCREEN_HEIGHT;
 
 	//GameState stack
-	std::stack<GameState *> states;
+	std::stack<std::shared_ptr<GameState>> states;
 
 public:
 	Game(int, int);
+	Game();
 	~Game();
 
-	void PushState(GameState *state);
-
+	//State handler functions.
+	void PushState(std::shared_ptr<GameState>);
 	void PopState();
-
-	GameState * PeekState();
-
+	void ChangeState(std::shared_ptr<GameState>);
+	std::shared_ptr<GameState> PeekState();
+	
+	//Main gameloop.
 	void GameLoop();
+
 };
 
