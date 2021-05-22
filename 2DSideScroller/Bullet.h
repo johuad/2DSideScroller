@@ -6,17 +6,25 @@
 class Bullet
 {
 private:
+	//Bullet speed.
 	int speed;
+
+	//Bullet is a simple SFML rectangle.
 	sf::RectangleShape bullet;
+
 public:
 	Bullet(int);
 	~Bullet();
 
+	//Setter for bullet position on screen.
 	void setPos(sf::Vector2f);
 
+	//Function for firing a bullet.
 	void fire();
 
+	//Getter for bullet direction.
 	int getDirection();
 
+	//Getter for bullet.
 	sf::RectangleShape getBullet();
 };

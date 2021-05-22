@@ -13,102 +13,135 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Tiles">
+      <UniqueIdentifier>{0fb1a958-fe56-4daa-aa69-5216a27548de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{80c0ffc3-e805-41d2-8e91-292311318570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{f8530f58-ea5d-445f-84ee-1b19382881ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tiles">
+      <UniqueIdentifier>{1fd4616e-b066-426d-a873-a7fa9d501e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{d1f64fa8-2f5e-460c-92ee-5df9a53c630d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{06995b36-996f-4bc9-9db8-6f848304b9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Things">
+      <UniqueIdentifier>{fe859f37-b489-4589-9503-7e9544c70f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Things">
+      <UniqueIdentifier>{d51e3411-b0e9-47e4-bd64-28a895d82948}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GateTile.cpp">
+      <Filter>Source Files\Tiles</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ContactListener.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GoalTile.cpp">
+      <Filter>Source Files\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="GroundTile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="LavaTile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GoalTile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateTile.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameStateMenu.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactListener.cpp">
+      <Filter>Source Files\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatePlay.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="LavaTile.h">
+      <Filter>Header Files\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GateTile.h">
+      <Filter>Header Files\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="ContactListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GoalTile.h">
+      <Filter>Header Files\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="GroundTile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="LavaTile.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GoalTile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Obstacle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateTile.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameStateMenu.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactListener.h">
+      <Filter>Header Files\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatePlay.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,8 +167,5 @@
     <Font Include="arial.ttf">
       <Filter>Resource Files</Filter>
     </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

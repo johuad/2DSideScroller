@@ -34,66 +34,60 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 	{
 		for (int r = 0; r < row; r++)
 		{
-			//world borders
-			if (level[r][c] == 1)
-			{
-				//just using a blank tile and pointing it at the transparent part of the sheet
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 100, 50, 50);
+			int tileType = level[r][c];
+
+			switch (tileType) {
+			case 1:
+				//world borders
+				tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 100, 50, 50);
 
 				tiles->push_back(tile);
-			}
-			//top ground
-			else if (level[r][c] == 2)
-			{
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 100, 0, 50, 50);
+				break;
+			case 2:
+				//top ground
+				tile = new GroundTile(world, c * 50.f, r * 50.f, 100, 0, 50, 50);
 
 				tiles->push_back(tile);
-			}
-			//mid ground
-			else if (level[r][c] == 3)
-			{
-				GroundTile * tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 40, 50, 50);
+				break;
+			case 3:
+				//mid ground
+				tile = new GroundTile(world, c * 50.f, r * 50.f, 50, 40, 50, 50);
 
 				tiles->push_back(tile);
-			}
-			//lava
-			else if (level[r][c] == 4)
-			{
-				LavaTile * tile = new LavaTile(c * 50.f, r * 50.f, 100, 50, 60, 50);
+				break;
+			case 4:
+				//lava
+				tile = new LavaTile(c * 50.f, r * 50.f, 100, 50, 60, 50);
 
 				tiles->push_back(tile);
-			}
-			//obstacle
-			else if (level[r][c] == 5)
-			{
+				break;
+			case 5:
+				//obstacle
 				initXO = c * 50.f;
 				initYO = r * 50.f;
-			}
-			//gate
-			else if (level[r][c] == 6)
-			{
-				GateTile * tile = new GateTile(c * 50.f, r * 50.f, 0, 40, 50, 50);
+				break;
+			case 6:
+				//gate
+				tile = new GateTile(c * 50.f, r * 50.f, 0, 40, 50, 50);
 
 				tiles->push_back(tile);
-			}
-			//goal
-			else if (level[r][c] == 7)
-			{
-				GoalTile * tile = new GoalTile(c * 50.f, r * 50.f, 100, 50, 50, 50);
+				break;
+			case 7:
+				//goal
+				tile = new GoalTile(c * 50.f, r * 50.f, 100, 50, 50, 50);
 
 				tiles->push_back(tile);
-			}
-			//player spawn
-			else if (level[r][c] == 8)
-			{
+				break;
+			case 8:
+				//player spawn
 				initX = c * 50.f;
 				initY = r * 50.f;
-			}
-			//enemy spawn
-			else if (level[r][c] == 9)
-			{
+				break;
+			case 9:
+				//enemy spawn
 				initXE = c * 50.f;
 				initYE = r * 50.f;
+				break;
 			}
 		}
 	}
