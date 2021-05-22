@@ -2,7 +2,20 @@
 
 Player::Player()
 {	
+	//Set player hitpoints.
+	hitPoints = 100;
+
+	//Set initial facing.
+	lastDirection = 1;
+	
+	//Set movement triggers.
+	moveLeft = false;
+	moveRight = false;
+
+	//Load sprite sheet.
 	texture.loadFromFile("spritesheet.png");
+	
+	//Set player sprite.
 	sprite.setTexture(texture);
 }
 
@@ -18,6 +31,26 @@ void Player::setLastDirection(int i)
 int Player::getLastDirection()
 {
 	return lastDirection;
+}
+
+void Player::FireBullet()
+{
+	// firing bullet*/
+	if (bullets.size() < 1)
+	{
+		int speed = 3;
+		if (getLastDirection() == 1)
+		{
+			speed = speed * 1;
+		}
+		else if (getLastDirection() == 0)
+		{
+			speed = speed * -1;
+		}
+		Bullet bullet = Bullet(speed);
+		bullet.setPos(sf::Vector2f(body->GetPosition().x, body->GetPosition().y));
+		bullets.push_back(bullet);
+	}
 }
 
 b2Body * Player::createBody(b2World * world, float x, float y)

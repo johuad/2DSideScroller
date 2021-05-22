@@ -2,9 +2,11 @@
 
 Enemy::Enemy()
 {
-	texture.loadFromFile("spritesheet.png");
-	sprite.setTexture(texture);
 	hitPoints = 100;
+
+	texture.loadFromFile("spritesheet.png");
+	
+	sprite.setTexture(texture);
 }
 
 Enemy::~Enemy()

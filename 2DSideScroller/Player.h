@@ -1,62 +1,75 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
+#include <vector>
 #include "Entity.h"
+#include "Bullet.h"
 
 class Player : public Entity
 {
 protected:
-	//player hitpoints
-	int hitPoints = 100;
+	//Player hitpoints.
+	int hitPoints;
 	
-	//last facing
-	int lastDirection = 1;
+	//Last facing.
+	int lastDirection;
 
-	//player initial position
+	//Initial player position.
 	float initX;
 	float initY;
 
-	//player mass
+	//Player mass.
 	float mass;
 
-	bool moveLeft = false;
-	bool moveRight = false;
+	//Movement flags.
+	bool moveLeft;
+	bool moveRight;
 
-	//player body.
+	//Player Box2D body.
 	b2Body * body;
 
-	//player position
+	//Player position.
 	b2Vec2 position;
-	//player velocity
+	
+	//Player velocity.
 	b2Vec2 velocity;
 
-	//player texture
+	//Player sprite texture.
 	sf::Texture texture;
 
-	//player sprite
+	//Player sprite.
 	sf::Sprite sprite;
+
 public:
 	Player();
 	~Player();
 
+	//Bullets.
+	std::vector<Bullet> bullets;
+	
 	void setLastDirection(int);
+
 	int getLastDirection();
 
-	// Inherited via Entity
+	void FireBullet();
+
+	//Setter & Getter for player hitpoints.
 	virtual void setHP() override;
+
 	virtual int getHP() override;
 
-	//movement functions
+	//Player movement.
 	virtual void moveY(b2Body *) override;
+
 	virtual void moveX(b2Body *, float) override;
 
-	//create player body
+	//Create player's Box2D body.
 	virtual b2Body *createBody(b2World * world, float, float) override;
 
-	//destroy player/player body. 
+	//Destroy player's Box2D body.
 	virtual void destroy(b2Body *) override;
 	
-	//generate and return player sprite.
+	//Create the player sprite.
 	virtual sf::Sprite getSprite(b2Body *) override;
 };
 

@@ -1,12 +1,9 @@
 #include "ContactListener.h"
 
-
-
 ContactListener::ContactListener()
 {
 	numFootContacts = 0;
 }
-
 
 ContactListener::~ContactListener()
 {

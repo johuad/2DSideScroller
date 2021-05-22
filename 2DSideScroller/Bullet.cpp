@@ -2,7 +2,10 @@
 
 Bullet::Bullet(int s)
 {
+	//Set speed to s.
 	speed = s;
+
+	//Set Bullet size & color.
 	bullet.setSize(sf::Vector2f(4, 4));
 	bullet.setFillColor(sf::Color::Green);
 }

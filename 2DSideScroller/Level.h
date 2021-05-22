@@ -3,7 +3,6 @@
 #include <Box2D\Box2D.h>
 #include <string>
 #include <fstream>
-#include <iostream>
 #include "Tile.h"
 #include "GroundTile.h"
 #include "LavaTile.h"
@@ -13,23 +12,26 @@
 class Level
 {
 private:
-	//player initial position
+	//Initial player position.
 	float initX;
 	float initY;
 
-	//enemy initial position
+	//Initial enemy position.
 	float initXE;
 	float initYE;
 
-	//obstacle initial position
+	//Initial obstacle position.
 	float initXO;
 	float initYO;
 
-	//pointer to 2d array
+	//Blank 2D array for level generation.
 	int **level;
 
-	//storage for level.
+	//Vector to store tiles as they're created.
 	std::vector<sf::RectangleShape> tiles;
+	
+	//Blank tile declaration.
+	Tile * tile;
 public:
 	Level();
 	~Level();
@@ -42,10 +44,8 @@ public:
 	//getters for initial positions (spawn points)
 	float getInitX();
 	float getInitY();
-
 	float getInitXE();
 	float getInitYE();
-
 	float getInitXO();
 	float getInitYO();
 };
