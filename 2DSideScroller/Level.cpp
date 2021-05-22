@@ -1,17 +1,10 @@
 #include "Level.h"
 
-Level::Level()
-{
-}
-
-Level::~Level()
-{
-}
-
-void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::string fileName, int row, int col)
+Level::Level(b2World *world, std::vector<Tile*> *tiles, std::string fileName, int row, int col)
 {
 	//select file to read
-	std::ifstream levelFile{ fileName };
+	std::ifstream levelFile;
+	levelFile.open(fileName);
 
 	//dynamically allocate 1d array for level generation
 	level = new int*[row];
@@ -91,6 +84,16 @@ void Level::generateLevel(b2World * world, std::vector<Tile*> * tiles, std::stri
 			}
 		}
 	}
+
+	levelFile.close();
+}
+
+Level::Level()
+{
+}
+
+Level::~Level()
+{
 }
 
 float Level::getInitX()

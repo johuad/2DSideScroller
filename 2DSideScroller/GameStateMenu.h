@@ -11,23 +11,21 @@
 class GameStateMenu : public GameState
 {
 private:
-	Game *game;
+	std::shared_ptr<Game> game;
 
-	Button *playButton;
-	Button *settingsButton;
-	Button *exitButton;
+	std::shared_ptr<Button> playButton;
+	std::shared_ptr<Button> exitButton;
 
-	std::vector<Button *> buttons;
+	std::vector<std::shared_ptr<Button>> buttons;
 
 	bool clicked = false;
 public:
-	GameStateMenu(Game *game);
+	GameStateMenu(std::shared_ptr<Game>);
 	~GameStateMenu();
 
 	// Inherited via GameState
-	virtual void SetupUI(sf::RenderWindow &window) override;
-	virtual void Draw(sf::RenderWindow &window, const float delta) override;
-	virtual void Update(const float delta) override;
-	virtual void HandleInput(sf::RenderWindow &window, sf::Event event) override;
+	virtual void Draw(sf::RenderWindow &, const float) override;
+	virtual void Update(const float) override;
+	virtual void HandleInput(sf::RenderWindow &, sf::Event) override;
 };
 

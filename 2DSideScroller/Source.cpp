@@ -1,16 +1,19 @@
 #include "Game.h"
 #include "GameStateMenu.h"
-#include <memory>
 
 int main()
 {
-	//TODO: Implement settings & saving/loading settings from file.
-	//TODO: I still want to do this.
+	//TODO: change raw pointers to smart pointers.
+	//TODO: figure out a better way to set up the menu UI.
 
-	//set up initial game screen.
-	Game *game = new Game(1280, 700);
+	//Start the game.
+	//Game game = Game(1280, 700);
 
-	game->PushState(new GameStateMenu(game));
+	std::shared_ptr<Game> game;
+
+	game = std::shared_ptr<Game>(new Game(1280, 700));
+
+	game->ChangeState(std::shared_ptr<GameStateMenu>(new GameStateMenu(game)));
 	game->GameLoop();
 
 	return 0;

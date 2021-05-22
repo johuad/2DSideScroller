@@ -1,10 +1,15 @@
 #pragma once
 #include "GameState.h"
+#include "GameStateMenu.h"
 #include "Game.h"
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include <vector>
+#include <memory>
 #include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <string>
 #include "ContactListener.h"
 #include "Level.h"
 #include "Tile.h"
@@ -17,7 +22,7 @@ class GameStatePlay : public GameState
 {
 private:
 	//Pointer to our state handler.
-	Game *game;
+	std::shared_ptr<Game> game;
 
 	//Box2D physics world.
 	b2World *world;
@@ -47,6 +52,13 @@ private:
 	//Used to generate new level filename
 	int levelCount;
 
+	//For next level.
+	std::string nextLevel;
+	std::string lastLevel;
+	std::ifstream manifest;
+	std::string line;
+	std::vector<std::string> levelManifest;
+
 	//Text
 	sf::Text text;
 	sf::Font font;
@@ -62,15 +74,14 @@ private:
 	b2Body *obstacleBody;
 
 public:
-	GameStatePlay(Game *game, std::string levelName);
+	GameStatePlay(std::shared_ptr<Game>, std::string);
 	~GameStatePlay();
 
 	//Inherited via GameState
-	virtual void SetupUI(sf::RenderWindow & window) override;
-	virtual void Draw(sf::RenderWindow & window, const float delta) override;
-	virtual void Update(const float delta) override;
-	virtual void HandleInput(sf::RenderWindow & window, sf::Event event) override;
+	virtual void Draw(sf::RenderWindow &, const float) override;
+	virtual void Update(const float) override;
+	virtual void HandleInput(sf::RenderWindow &, sf::Event) override;
 
-	int GetLevelCount(std::string i);
+	int GetLevelCount(std::string);
 };
 

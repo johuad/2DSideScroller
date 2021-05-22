@@ -1,34 +1,31 @@
 #include "GameStateMenu.h"
 
-GameStateMenu::GameStateMenu(Game *game)
+GameStateMenu::GameStateMenu(std::shared_ptr<Game> game)
 {
 	this->game = game;
 
-	playButton = new Button();
-	settingsButton = new Button();
-	exitButton = new Button();
+	playButton = std::shared_ptr<Button>(new Button());
+	exitButton = std::shared_ptr<Button>(new Button());
 
+	buttons.push_back(playButton);
+	buttons.push_back(exitButton);
 }
 
 GameStateMenu::~GameStateMenu()
 {
 }
 
-void GameStateMenu::SetupUI(sf::RenderWindow &window)
-{
-	playButton->GenerateButton("play", window.getSize().x / 2, window.getSize().y / 2 + 55, 100, 50);
-	buttons.push_back(playButton);
-
-	settingsButton->GenerateButton("settings", window.getSize().x / 2, window.getSize().y / 2 + 110, 100, 50);
-	buttons.push_back(settingsButton);
-
-	exitButton->GenerateButton("exit", window.getSize().x / 2, window.getSize().y / 2 + 165, 100, 50);
-	buttons.push_back(exitButton);
-}
 
 void GameStateMenu::Draw(sf::RenderWindow &window, const float delta)
 {
+	sf::View view = window.getDefaultView();
+
+	window.setView(view);
+
 	window.clear(sf::Color::White);
+
+	playButton->GenerateButton("play", window.getSize().x / 2, window.getSize().y / 2 + 55, 100, 50);
+	exitButton->GenerateButton("exit", window.getSize().x / 2, window.getSize().y / 2 + 110, 100, 50);
 
 	for (auto &b : buttons) 
 	{
@@ -64,11 +61,7 @@ void GameStateMenu::HandleInput(sf::RenderWindow &window, sf::Event event)
 						{
 							if (b->GetButtonID() == "play")
 							{
-								game->PushState(new GameStatePlay(game, "level1.txt"));
-							}
-							if (b->GetButtonID() == "settings")
-							{
-								std::cout << "settings clicked" << std::endl;
+								game->ChangeState(std::shared_ptr<GameStatePlay>(new GameStatePlay(game, "level1.txt")));
 							}
 							if (b->GetButtonID() == "exit")
 							{
@@ -80,9 +73,11 @@ void GameStateMenu::HandleInput(sf::RenderWindow &window, sf::Event event)
 				}
 			}
 			break;
+
 		case sf::Event::MouseButtonReleased:
 			clicked = false;
 			break;
+
 		default:
 			break;
 	}

@@ -2,7 +2,6 @@
 
 Button::Button()
 {
-
 }
 
 Button::~Button()

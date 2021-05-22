@@ -11,13 +11,14 @@ private:
 	
 	//ID of the button.
 	std::string id = "";
+
 public:
 	Button();
 	~Button();
 
 	void GenerateButton(std::string, float, float, float, float);
 	sf::RectangleShape GetButton();
-	bool ButtonClicked(float x, float y);
+	bool ButtonClicked(float, float);
 	std::string GetButtonID();
 };
 

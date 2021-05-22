@@ -8,37 +8,55 @@ Game::Game(int w, int h)
 
 }
 
-Game::~Game()
+Game::Game()
 {
 }
 
-void Game::PushState(GameState * state)
+Game::~Game()
+{
+
+}
+
+void Game::PushState(std::shared_ptr<GameState> state)
 {
 	//Push a new state on top of the stack.
-	this->states.push(state);
+	states.push(state);
+	std::cout << states.size() << std::endl;
 }
 
 void Game::PopState()
 {
 	//Delete the state on the top of the stack.
-	delete this->states.top();
+	//delete &states.top();
 	
 	//pop it.
 	states.pop();
-	
+
+	std::cout << states.size() << std::endl;
 	return;
 }
 
-GameState * Game::PeekState()
+void Game::ChangeState(std::shared_ptr<GameState> state)
+{
+	if (!states.empty())
+	{
+		PopState();
+	}
+	PushState(state);
+
+	std::cout << states.size() << std::endl;
+}
+
+std::shared_ptr<GameState> Game::PeekState()
 {
 	//Look at the top of the stack.
-	if (this->states.empty()) 
+	if (states.empty()) 
 	{
 		return nullptr;
 	}
 	else 
 	{
-		return this->states.top();
+		return states.top();
 	}
 }
 
@@ -50,14 +68,8 @@ void Game::GameLoop()
 	//Create render window & set title.
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "2D Side Scroller");
 
-	//Set up & initialize view.
-	sf::View view = window.getDefaultView();
-
 	//Limit framerate to 60.
 	window.setFramerateLimit(60);
-
-	//Set up state's UI if one exists.
-	PeekState()->SetupUI(window);
 
 	while (window.isOpen())
 	{

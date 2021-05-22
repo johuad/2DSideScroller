@@ -64,7 +64,7 @@ public:
 	virtual void moveX(b2Body *, float) override;
 
 	//Create player's Box2D body.
-	virtual b2Body *createBody(b2World * world, float, float) override;
+	virtual b2Body *createBody(b2World *, float, float) override;
 
 	//Destroy player's Box2D body.
 	virtual void destroy(b2Body *) override;
