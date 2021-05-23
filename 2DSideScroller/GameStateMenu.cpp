@@ -4,9 +4,11 @@ GameStateMenu::GameStateMenu(std::shared_ptr<Game> game)
 {
 	this->game = game;
 
+	//Create menu buttons.
 	playButton = std::shared_ptr<Button>(new Button());
 	exitButton = std::shared_ptr<Button>(new Button());
 
+	//Push menu buttons onto the list.
 	buttons.push_back(playButton);
 	buttons.push_back(exitButton);
 }
@@ -20,13 +22,16 @@ void GameStateMenu::Draw(sf::RenderWindow &window, const float delta)
 {
 	sf::View view = window.getDefaultView();
 
+	//Set the view to the default for the renderwindow.
 	window.setView(view);
-
+	//Clear for each frame.
 	window.clear(sf::Color::White);
 
+	//Set button parameters.
 	playButton->GenerateButton("play", window.getSize().x / 2, window.getSize().y / 2 + 55, 100, 50);
 	exitButton->GenerateButton("exit", window.getSize().x / 2, window.getSize().y / 2 + 110, 100, 50);
 
+	//Draw the buttons.
 	for (auto &b : buttons) 
 	{
 		if (!buttons.size() == 0)
@@ -43,6 +48,7 @@ void GameStateMenu::Update(const float delta)
 
 void GameStateMenu::HandleInput(sf::RenderWindow &window, sf::Event event)
 {
+	//Pixel & world positions for mouse input.
 	sf::Vector2i pixelPos;
 	sf::Vector2f worldPos;
 

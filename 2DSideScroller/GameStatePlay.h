@@ -4,7 +4,6 @@
 #include "Game.h"
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include <memory>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -21,15 +20,15 @@
 class GameStatePlay : public GameState
 {
 private:
-	//Pointer to our state handler.
+	//Pointer back to Game/state handler.
 	std::shared_ptr<Game> game;
 
 	//Box2D physics world.
 	b2World *world;
 
 	//Used to update the Box2D physics.
-	int32 velocityIterations;
-	int32 positionIterations;
+	const int32 velocityIterations = 6;
+	const int32 positionIterations = 2;
 
 	//Contact listener for Box2D
 	ContactListener worldContactListener;
@@ -38,7 +37,7 @@ private:
 	std::vector<b2Body *> bodies;
 
 	//Vector for storing tiles
-	std::vector<Tile*> tiles;
+	std::vector<std::shared_ptr<Tile>> tiles;
 
 	//Flag for firing bullets.
 	bool isFiring;

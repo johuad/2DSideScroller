@@ -12,7 +12,7 @@ protected:
 	float mass;
 
 	//Entity Box2D body.
-	b2Body * body;
+	std::shared_ptr<b2Body> body;
 
 	//Entity position.
 	b2Vec2 position;
@@ -42,9 +42,9 @@ public:
 	virtual void destroy(b2Body *) = 0;
 
 	//Create Entity's Box2D body.
-	virtual b2Body *createBody(b2World *, float, float) = 0;
+	virtual b2Body * createBody(b2World *, float, float) = 0;
 
-	//Get Entity's sprite.
+	//Create and return sprite.
 	virtual sf::Sprite getSprite(b2Body *) = 0;
 };
 

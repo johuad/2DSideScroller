@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameStateMenu.h"
+#include <memory>
 
 int main()
 {
