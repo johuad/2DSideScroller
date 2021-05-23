@@ -17,25 +17,21 @@ Game::~Game()
 
 }
 
+//Push a state onto the stack.
 void Game::PushState(std::shared_ptr<GameState> state)
 {
-	//Push a new state on top of the stack.
 	states.push(state);
-	std::cout << states.size() << std::endl;
 }
 
+//Pop a state off of the stack.
 void Game::PopState()
 {
-	//Delete the state on the top of the stack.
-	//delete &states.top();
-	
-	//pop it.
 	states.pop();
 
-	std::cout << states.size() << std::endl;
 	return;
 }
 
+//Change to a given state.
 void Game::ChangeState(std::shared_ptr<GameState> state)
 {
 	if (!states.empty())
@@ -44,9 +40,9 @@ void Game::ChangeState(std::shared_ptr<GameState> state)
 	}
 	PushState(state);
 
-	std::cout << states.size() << std::endl;
 }
 
+//Look at the state on the top of the stack.
 std::shared_ptr<GameState> Game::PeekState()
 {
 	//Look at the top of the stack.
@@ -71,33 +67,39 @@ void Game::GameLoop()
 	//Limit framerate to 60.
 	window.setFramerateLimit(60);
 
-	while (window.isOpen())
+	try
 	{
-		sf::Event event;
-
-		//Initialize delta time.
-		sf::Time elapsed = clock.restart();
-		float delta = elapsed.asSeconds();
-
-		while (window.pollEvent(event))
+		while (window.isOpen())
 		{
-			//Allow the window to close.
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+			sf::Event event;
 
-		if (PeekState() == nullptr) 
-		{
-			continue;
-		}
-		else
-		{
-			PeekState()->HandleInput(window, event);
-			PeekState()->Update(delta);
-			PeekState()->Draw(window, delta);
-		}
-		
-		window.display();
+			//Initialize delta time.
+			sf::Time elapsed = clock.restart();
+			float delta = elapsed.asSeconds();
 
+			while (window.pollEvent(event))
+			{
+				//Allow the window to close.
+				if (event.type == sf::Event::Closed)
+					window.close();
+			}
+
+			if (PeekState() == nullptr)
+			{
+				continue;
+			}
+			else
+			{
+				PeekState()->HandleInput(window, event);
+				PeekState()->Update(delta);
+				PeekState()->Draw(window, delta);
+			}
+			window.display();
+
+		}
+	}
+	catch (int e)
+	{
+		std::cout << "An exception occurred: " << e << std::endl;
 	}
 }

@@ -8,8 +8,8 @@ public:
 	ContactListener();
 	~ContactListener();
 
-	virtual void BeginContact(b2Contact*);
+	virtual void BeginContact(b2Contact *);
 
-	virtual void EndContact(b2Contact*);
+	virtual void EndContact(b2Contact *);
 };
 

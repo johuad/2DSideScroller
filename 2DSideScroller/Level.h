@@ -31,9 +31,10 @@ private:
 	std::vector<sf::RectangleShape> tiles;
 	
 	//Blank tile declaration.
-	Tile * tile;
+	std::shared_ptr<Tile> tile;
+
 public:
-	Level(b2World *, std::vector<Tile*> *, std::string, int, int);
+	Level(b2World *, std::vector<std::shared_ptr<Tile>> *, std::string, int, int);
 	Level();
 	~Level();
 
@@ -47,5 +48,6 @@ public:
 	float getInitYE();
 	float getInitXO();
 	float getInitYO();
+
 };
 

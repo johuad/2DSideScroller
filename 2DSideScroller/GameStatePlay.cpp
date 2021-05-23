@@ -3,9 +3,6 @@
 GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 {
 	this->game = game;
-	
-	velocityIterations = 6;
-	positionIterations = 2;
 
 	//Initialize Box2D world and attach contact listener.
 	world = new b2World(b2Vec2(0.0f, 100.0f));
@@ -29,7 +26,7 @@ GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 	//set current level (file name)
 	curLevel = levelName;
 
-	//generate level
+	//Generate level
 	level = Level(world, &tiles, levelName, 10, 80);
 
 	//create a new body for our player.
@@ -44,18 +41,25 @@ GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 	//Get the current level count.
 	levelCount = GetLevelCount(curLevel);
 
+	//Add one to the level count.
 	levelCount = levelCount + 1;
 
+	//Get the name of the next level.
 	nextLevel = "level" + std::to_string(levelCount) + ".txt";
+	
+	//Initialize "last level".
 	lastLevel = "";
 
+	//Open the level manifest.
 	manifest.open("levelmanifest.txt");
 
+	//Go through each line in the manifest and push it into the list.
 	while (std::getline(manifest, line))
 	{
 		levelManifest.push_back(line);
 	}
 
+	//If nextLevel isn't found in the manifest, the current level is the last level.
 	if (!std::count(levelManifest.begin(), levelManifest.end(), nextLevel))
 	{
 		lastLevel = curLevel;
@@ -143,11 +147,11 @@ void GameStatePlay::Update(const float delta)
 
 			if (b.getDirection() > 0)
 			{
-				impulse = impulse * 1;
+				impulse = impulse * 1 * delta;
 			}
 			else if (b.getDirection() < 0)
 			{
-				impulse = impulse * -1;
+				impulse = impulse * -1 * delta;
 			}
 			enemy->moveX(enemyBody, impulse);
 		}

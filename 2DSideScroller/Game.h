@@ -13,7 +13,7 @@ protected:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 
-	//GameState stack
+	//GameState stack.
 	std::stack<std::shared_ptr<GameState>> states;
 
 public:
@@ -27,7 +27,7 @@ public:
 	void ChangeState(std::shared_ptr<GameState>);
 	std::shared_ptr<GameState> PeekState();
 	
-	//Main gameloop.
+	//Run the main gameloop.
 	void GameLoop();
 
 };

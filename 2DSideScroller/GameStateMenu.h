@@ -11,6 +11,7 @@
 class GameStateMenu : public GameState
 {
 private:
+	//Pointer back to Game/state handler.
 	std::shared_ptr<Game> game;
 
 	std::shared_ptr<Button> playButton;

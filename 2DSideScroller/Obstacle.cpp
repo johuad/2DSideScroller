@@ -33,30 +33,23 @@ void Obstacle::destroy(b2Body *)
 
 b2Body * Obstacle::createBody(b2World * world, float x, float y)
 {
+	//Create body.
 	b2BodyDef bodyDef;
-	//set body type
 	bodyDef.type = b2_dynamicBody;
-	//set body position
 	bodyDef.position.Set(x, y);
-	//prevent body from rotating
 	bodyDef.fixedRotation = true;
-	//create body
 	body = world->CreateBody(&bodyDef);
 
+	//Define hitbox.
 	b2PolygonShape dynamicBox;
-	//define hitbox dimensions
 	dynamicBox.SetAsBox(10.0f, 25.0f);
 
+	//Define and create Box2D fixture.
 	b2FixtureDef fixtureDef;
-	//apply hitbox to fixture
 	fixtureDef.shape = &dynamicBox;
-	//set density of our fixture
 	fixtureDef.density = 5.0f;
-	//set friction of our fixture
 	fixtureDef.friction = 0.0f;
-	//set fixture restitution
 	fixtureDef.restitution = 0.0f;
-	//apply fixture to body
 	body->CreateFixture(&fixtureDef);
 
 	mass = body->GetMass();

@@ -2,20 +2,15 @@
 
 Player::Player()
 {	
-	//Set player hitpoints.
 	hitPoints = 100;
 
-	//Set initial facing.
 	lastDirection = 1;
 	
-	//Set movement triggers.
 	moveLeft = false;
 	moveRight = false;
 
-	//Load sprite sheet.
 	texture.loadFromFile("spritesheet.png");
 	
-	//Set player sprite.
 	sprite.setTexture(texture);
 }
 
@@ -53,45 +48,35 @@ void Player::FireBullet()
 	}
 }
 
-b2Body * Player::createBody(b2World * world, float x, float y)
+b2Body *Player::createBody(b2World *world, float x, float y)
 {
+	//Create body.
 	b2BodyDef bodyDef;
-	//set body type
 	bodyDef.type = b2_dynamicBody;
-	//set body position
 	bodyDef.position.Set(x, y);
-	//prevent body from rotating
 	bodyDef.fixedRotation = true;
-	//create body
 	body = world->CreateBody(&bodyDef);
 
+	//Define hitbox.
 	b2PolygonShape dynamicBox;
-	//define hitbox dimensions
 	dynamicBox.SetAsBox(5.0f, 20.0f);
 
+	//Define & create Box2D fixture.
 	b2FixtureDef fixtureDef;
-	//apply hitbox to fixture
 	fixtureDef.shape = &dynamicBox;
-	//set density of our fixture
 	fixtureDef.density = 1.0f;
-	//set friction of our fixture
 	fixtureDef.friction = 0.0f;
-	//set fixture restitution
 	fixtureDef.restitution = 0;
-	//apply fixture to body
 	body->CreateFixture(&fixtureDef);
 
-	//foot sensor fixture
+	//Define & create Box2D Foot Sensor fixture.
 	dynamicBox.SetAsBox(2.45f, 2.5f, b2Vec2(0.f, 20.f), 0);
 	fixtureDef.isSensor = true;
 	b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 	footSensorFixture->SetUserData((void*)3);
 
-	//get body mass
 	mass = body->GetMass();
-	//get body position
 	position = body->GetPosition();
-	//get body velocity
 	velocity = body->GetLinearVelocity();
 
 	initX = x;
