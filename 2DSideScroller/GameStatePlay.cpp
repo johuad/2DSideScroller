@@ -169,7 +169,7 @@ void GameStatePlay::Update(const float delta)
 
 				if (player->getHP() < 0)
 				{
-					player->destroy(playerBody);
+					game->ChangeState(std::shared_ptr<GameStateMenu>(new GameStateMenu(game)));
 				}
 			}
 		}
