@@ -36,21 +36,20 @@ public:
 	
 	std::vector<Bullet> bullets;
 
-	void setLastDirection(int);
-
-	int getLastDirection();
-
-	void FireBullet();
-
 	virtual void setHP() override;
 	virtual int getHP() override;
+
+	virtual b2Body * createBody(b2World *, float, float) override;
+	virtual void destroy(b2Body *) override;
+
+	virtual sf::Sprite getSprite(b2Body *) override;
 
 	virtual void moveY(b2Body *) override;
 	virtual void moveX(b2Body *, float) override;
 
-	virtual b2Body * createBody(b2World *, float, float) override;
-	virtual void destroy(b2Body *) override;
-	
-	virtual sf::Sprite getSprite(b2Body *) override;
+	void setLastDirection(int);
+	int getLastDirection();
+
+	void FireBullet();
 };
 

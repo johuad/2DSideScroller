@@ -18,34 +18,14 @@ Player::~Player()
 {
 }
 
-void Player::setLastDirection(int i)
+void Player::setHP()
 {
-	lastDirection = i;
+	hitPoints--;
 }
 
-int Player::getLastDirection()
+int Player::getHP()
 {
-	return lastDirection;
-}
-
-void Player::FireBullet()
-{
-	// firing bullet*/
-	if (bullets.size() < 1)
-	{
-		int speed = 3;
-		if (getLastDirection() == 1)
-		{
-			speed = speed * 1;
-		}
-		else if (getLastDirection() == 0)
-		{
-			speed = speed * -1;
-		}
-		Bullet bullet = Bullet(speed);
-		bullet.setPos(sf::Vector2f(body->GetPosition().x, body->GetPosition().y));
-		bullets.push_back(bullet);
-	}
+	return hitPoints;
 }
 
 b2Body *Player::createBody(b2World *world, float x, float y)
@@ -83,16 +63,6 @@ b2Body *Player::createBody(b2World *world, float x, float y)
 	initY = y;
 
 	return body;
-}
-
-void Player::setHP()
-{
-	hitPoints--;
-}
-
-int Player::getHP()
-{
-	return hitPoints;
 }
 
 void Player::destroy(b2Body *)
@@ -137,4 +107,35 @@ void Player::moveX(b2Body * body, float impulse)
 		}
 	}
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
+}
+
+void Player::setLastDirection(int i)
+{
+	lastDirection = i;
+}
+
+int Player::getLastDirection()
+{
+	return lastDirection;
+}
+
+
+void Player::FireBullet()
+{
+	// firing bullet*/
+	if (bullets.size() < 1)
+	{
+		int speed = 3;
+		if (getLastDirection() == 1)
+		{
+			speed = speed * 1;
+		}
+		else if (getLastDirection() == 0)
+		{
+			speed = speed * -1;
+		}
+		Bullet bullet = Bullet(speed);
+		bullet.setPos(sf::Vector2f(body->GetPosition().x, body->GetPosition().y));
+		bullets.push_back(bullet);
+	}
 }
