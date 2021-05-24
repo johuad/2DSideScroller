@@ -23,6 +23,9 @@ private:
 	//Pointer back to Game/state handler.
 	std::shared_ptr<Game> game;
 
+	//Window view.
+	sf::View view;
+
 	//Box2D physics world.
 	b2World *world;
 

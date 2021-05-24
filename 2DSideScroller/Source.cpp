@@ -4,12 +4,7 @@
 
 int main()
 {
-	//TODO: change raw pointers to smart pointers.
-	//TODO: figure out a better way to set up the menu UI.
-
 	//Start the game.
-	//Game game = Game(1280, 700);
-
 	std::shared_ptr<Game> game;
 
 	game = std::shared_ptr<Game>(new Game(1280, 700));

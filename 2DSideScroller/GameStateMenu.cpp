@@ -37,6 +37,7 @@ void GameStateMenu::Draw(sf::RenderWindow &window, const float delta)
 		if (!buttons.size() == 0)
 		{
 			window.draw(b->GetButton());
+			window.draw(b->GetText());
 		}
 	}
 }
