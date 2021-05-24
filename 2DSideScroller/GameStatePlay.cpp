@@ -20,9 +20,6 @@ GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 	enemy = new Enemy();
 	obstacle = new Obstacle();
 
-	//Set firing to false.
-	isFiring = false;
-
 	//Set current level (file name)
 	curLevel = levelName;
 
@@ -46,9 +43,6 @@ GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 
 	//Get the name of the next level.
 	nextLevel = "level" + std::to_string(levelCount) + ".txt";
-	
-	//Initialize "last level".
-	lastLevel = "";
 
 	//Open the level manifest.
 	manifest.open("levelmanifest.txt");

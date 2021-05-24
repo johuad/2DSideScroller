@@ -9,7 +9,7 @@ protected:
 	
 	sf::Sprite sprite;
 public:
-	LavaTile(float, float, int, int, int, int);
+	LavaTile(float r, float c, int x, int y, int sx, int sy);
 	~LavaTile();
 
 	// Inherited via Tile

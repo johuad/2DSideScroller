@@ -10,7 +10,7 @@ protected:
 
 	sf::Sprite sprite;
 public:
-	GateTile(float, float, int, int, int, int);
+	GateTile(float r, float c, int x, int y, int sx, int sy);
 	~GateTile();
 
 	// Inherited via Tile

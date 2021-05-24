@@ -8,18 +8,18 @@
 class Player : public Entity
 {
 protected:
-	int hitPoints;
+	int hitPoints = 100;
 	
-	float initX;
-	float initY;
-	float mass;
+	float initX = 0.0;
+	float initY = 0.0;
+	float mass = 0.0;
 
 	//Last facing.
-	int lastDirection;
+	int lastDirection = 1;
 
 	//Movement flags.
-	bool moveLeft;
-	bool moveRight;
+	bool moveLeft = false;
+	bool moveRight = false;
 
 	b2Body * body;
 
@@ -39,15 +39,15 @@ public:
 	virtual void setHP() override;
 	virtual int getHP() override;
 
-	virtual b2Body * createBody(b2World *, float, float) override;
-	virtual void destroy(b2Body *) override;
+	virtual b2Body * createBody(b2World *world, float x, float y) override;
+	virtual void destroy(b2Body *body) override;
 
-	virtual sf::Sprite getSprite(b2Body *) override;
+	virtual sf::Sprite getSprite(b2Body *body) override;
 
-	virtual void moveY(b2Body *) override;
-	virtual void moveX(b2Body *, float) override;
+	virtual void moveY(b2Body *body) override;
+	virtual void moveX(b2Body *body, float impulse) override;
 
-	void setLastDirection(int);
+	void setLastDirection(int i);
 	int getLastDirection();
 
 	void FireBullet();

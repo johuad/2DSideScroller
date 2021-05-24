@@ -28,8 +28,8 @@ void GameStateMenu::Draw(sf::RenderWindow &window, const float delta)
 	window.clear(sf::Color::White);
 
 	//Set button parameters.
-	playButton->GenerateButton("play", window.getSize().x / 2, window.getSize().y / 2 + 55, 100, 50);
-	exitButton->GenerateButton("exit", window.getSize().x / 2, window.getSize().y / 2 + 110, 100, 50);
+	playButton->GenerateButton("play", (float) window.getSize().x / 2, (float) window.getSize().y / 2 + 55.0, 100.0, 50.0);
+	exitButton->GenerateButton("exit", (float) window.getSize().x / 2, (float) window.getSize().y / 2 + 110.0, 100.0, 50.0);
 
 	//Draw the buttons.
 	for (auto &b : buttons) 

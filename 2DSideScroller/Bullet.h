@@ -13,11 +13,11 @@ private:
 	sf::RectangleShape bullet;
 
 public:
-	Bullet(int);
+	Bullet(int s);
 	~Bullet();
 
 	//Setter for bullet position on screen.
-	void setPos(sf::Vector2f);
+	void setPos(sf::Vector2f pos);
 
 	//Function for firing a bullet.
 	void fire();

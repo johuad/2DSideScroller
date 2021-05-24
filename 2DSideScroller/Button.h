@@ -20,10 +20,10 @@ public:
 	Button();
 	~Button();
 
-	void GenerateButton(std::string, float, float, float, float);
+	void GenerateButton(std::string id, float x, float y, float w, float h);
 	sf::RectangleShape GetButton();
 	sf::Text GetText();
-	bool ButtonClicked(float, float);
+	bool ButtonClicked(float x, float y);
 	std::string GetButtonID();
 };
 

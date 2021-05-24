@@ -20,13 +20,14 @@ private:
 	std::vector<std::shared_ptr<Button>> buttons;
 
 	bool clicked = false;
+
 public:
 	GameStateMenu(std::shared_ptr<Game>);
 	~GameStateMenu();
 
 	// Inherited via GameState
-	virtual void Draw(sf::RenderWindow &, const float) override;
-	virtual void Update(const float) override;
-	virtual void HandleInput(sf::RenderWindow &, sf::Event) override;
+	virtual void Draw(sf::RenderWindow & window, const float delta) override;
+	virtual void Update(const float delta) override;
+	virtual void HandleInput(sf::RenderWindow & window, sf::Event event) override;
 };
 

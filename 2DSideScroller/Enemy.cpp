@@ -23,7 +23,7 @@ int Enemy::getHP()
 	return hitPoints;
 }
 
-void Enemy::moveY(b2Body *)
+void Enemy::moveY(b2Body *body)
 {
 }
 
@@ -32,11 +32,11 @@ void Enemy::moveX(b2Body *body, float impulse)
 	body->ApplyLinearImpulse(b2Vec2(impulse, 0), body->GetWorldCenter(), true);
 }
 
-void Enemy::destroy(b2Body *)
+void Enemy::destroy(b2Body *body)
 {
 }
 
-b2Body * Enemy::createBody(b2World * world, float x, float y)
+b2Body * Enemy::createBody(b2World *world, float x, float y)
 {
 	//Create body.
 	b2BodyDef bodyDef;
@@ -65,7 +65,7 @@ b2Body * Enemy::createBody(b2World * world, float x, float y)
 	return body;
 }
 
-sf::Sprite Enemy::getSprite(b2Body *)
+sf::Sprite Enemy::getSprite(b2Body *body)
 {
 	sprite.setTextureRect(sf::IntRect(0, 0, 20, 40));
 	sprite.setColor(sf::Color::Yellow);

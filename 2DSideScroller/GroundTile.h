@@ -13,7 +13,7 @@ protected:
 
 	b2Body * body;
 public:
-	GroundTile(b2World *, float, float, int, int, int, int);
+	GroundTile(b2World * w, float r, float c, int x, int y, int sx, int sy);
 	~GroundTile();
 
 	virtual b2Body * returnBody();
