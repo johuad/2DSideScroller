@@ -6,10 +6,10 @@ class Entity
 {
 protected:
 	//Entity hitpoints.
-	int hitPoints;
+	int hitPoints = 100;
 
 	//Entity mass.
-	float mass;
+	float mass = 0;
 
 	//Entity Box2D body.
 	std::shared_ptr<b2Body> body;
@@ -35,16 +35,16 @@ public:
 	virtual int getHP() = 0;
 
 	//Movement functions.
-	virtual void moveY(b2Body *) = 0;
-	virtual void moveX(b2Body *, float) = 0;
+	virtual void moveY(b2Body *body) = 0;
+	virtual void moveX(b2Body *body, float impulse) = 0;
 
 	//Destroy Entity's Box2D Body.
-	virtual void destroy(b2Body *) = 0;
+	virtual void destroy(b2Body *body) = 0;
 
 	//Create Entity's Box2D body.
-	virtual b2Body * createBody(b2World *, float, float) = 0;
+	virtual b2Body * createBody(b2World *world, float x, float y) = 0;
 
 	//Create and return sprite.
-	virtual sf::Sprite getSprite(b2Body *) = 0;
+	virtual sf::Sprite getSprite(b2Body *body) = 0;
 };
 

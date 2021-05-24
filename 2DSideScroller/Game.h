@@ -10,14 +10,14 @@ class Game
 {
 protected:
 	//Screen dimensions.
-	int SCREEN_WIDTH;
-	int SCREEN_HEIGHT;
+	unsigned int SCREEN_WIDTH = 0;
+	unsigned int SCREEN_HEIGHT = 0;
 
 	//GameState stack.
 	std::stack<std::shared_ptr<GameState>> states;
 
 public:
-	Game(int, int);
+	Game(unsigned int w, unsigned int h);
 	Game();
 	~Game();
 

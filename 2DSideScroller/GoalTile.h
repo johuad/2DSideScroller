@@ -9,7 +9,7 @@ protected:
 
 	sf::Sprite sprite;
 public:
-	GoalTile(float, float, int, int, int, int);
+	GoalTile(float r, float c, int x, int y, int sx, int sy);
 	~GoalTile();
 
 	// Inherited via Tile

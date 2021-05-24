@@ -2,15 +2,7 @@
 
 Player::Player()
 {	
-	hitPoints = 100;
-
-	lastDirection = 1;
-	
-	moveLeft = false;
-	moveRight = false;
-
 	texture.loadFromFile("spritesheet.png");
-	
 	sprite.setTexture(texture);
 }
 

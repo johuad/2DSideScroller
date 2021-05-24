@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(int w, int h)
+Game::Game(unsigned int w, unsigned int h)
 {
 	//Set up screen dimensions.
 	SCREEN_WIDTH = w;

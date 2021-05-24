@@ -21,7 +21,7 @@ void Bullet::setPos(sf::Vector2f pos)
 
 void Bullet::fire()
 {
-	bullet.move(speed, 0);
+	bullet.move(speed, 0.0);
 }
 
 int Bullet::getDirection()

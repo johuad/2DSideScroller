@@ -43,22 +43,22 @@ private:
 	std::vector<std::shared_ptr<Tile>> tiles;
 
 	//Flag for firing bullets.
-	bool isFiring;
+	bool isFiring = false;
 
 	//Current level filename
-	std::string curLevel;
+	std::string curLevel = "";
 
 	//Level
 	Level level = Level();
 
 	//Used to generate new level filename
-	int levelCount;
+	int levelCount = 0;
 
 	//For next level.
-	std::string nextLevel;
-	std::string lastLevel;
+	std::string nextLevel = "";
+	std::string lastLevel = "";
 	std::ifstream manifest;
-	std::string line;
+	std::string line = "";
 	std::vector<std::string> levelManifest;
 
 	//Text
@@ -80,10 +80,10 @@ public:
 	~GameStatePlay();
 
 	//Inherited via GameState
-	virtual void Draw(sf::RenderWindow &, const float) override;
-	virtual void Update(const float) override;
-	virtual void HandleInput(sf::RenderWindow &, sf::Event) override;
+	virtual void Draw(sf::RenderWindow &window, const float delta) override;
+	virtual void Update(const float delta) override;
+	virtual void HandleInput(sf::RenderWindow &window, sf::Event event) override;
 
-	int GetLevelCount(std::string);
+	int GetLevelCount(std::string i);
 };
 
