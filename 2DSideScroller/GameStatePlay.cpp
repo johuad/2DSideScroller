@@ -23,19 +23,19 @@ GameStatePlay::GameStatePlay(std::shared_ptr<Game> game, std::string levelName)
 	//Set firing to false.
 	isFiring = false;
 
-	//set current level (file name)
+	//Set current level (file name)
 	curLevel = levelName;
 
 	//Generate level
 	level = Level(world, &tiles, levelName, 10, 80);
 
-	//create a new body for our player.
+	//Create a new body for our player.
 	playerBody = player->createBody(world, level.getInitX(), level.getInitY());
 
-	//create a new body for the enemy
+	//Create a new body for the enemy
 	enemyBody = enemy->createBody(world, level.getInitXE(), level.getInitYE());
 
-	//create a new body for the obstacle
+	//Create a new body for the obstacle
 	obstacleBody = obstacle->createBody(world, level.getInitXO(), level.getInitYO());
 
 	//Get the current level count.
@@ -73,7 +73,7 @@ GameStatePlay::~GameStatePlay()
 void GameStatePlay::Draw(sf::RenderWindow & window, const float delta)
 {
 	//Set up viewport.
-	sf::View view = window.getDefaultView();
+	view = window.getDefaultView();
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	view.zoom(0.5f);
 	view.setCenter(playerBody->GetPosition().x, playerBody->GetPosition().y);
@@ -189,7 +189,8 @@ void GameStatePlay::Update(const float delta)
 			{
 				if (lastLevel == curLevel)
 				{
-					game->ChangeState(std::shared_ptr<GameStateMenu>(new GameStateMenu(game)));
+					//game->ChangeState(std::shared_ptr<GameStateMenu>(new GameStateMenu(game)));
+					std::exit(0);
 				}
 				else
 				{
